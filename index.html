@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Aayush Rath">
+    <meta name="description" content="A website to write my blogs and my projects">
+    <title>My First Webpage</title>
+    <link rel="icon" href="assets\images\screw-removebg-preview.png">
+    <link href='https://fonts.googleapis.com/css?family=Josefin Slab' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Jura' rel='stylesheet'>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/"
+        }
+      }
+    </script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html{
+        font-size: 22px;
+        background-color: #fffaf4;
+      }
+
+      .horizontal_line {
+        width: 100%;
+        border-top: 1px solid black;
+        margin-top: 30px;
+        animation: growLine 1.2s ease-out forwards;
+      }
+
+      .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 40px 60px;
+        gap: 20px;
+        flex-wrap: nowrap;
+      }
+
+      h1 {
+        position: relative;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 40px;
+        font-weight: 500;
+        margin: 60px 0 0 87px;
+        max-width: 45%;
+      }
+
+      p {
+        font-family: 'Josefin Slab';
+        color: rgb(87, 1, 173);
+      }
+
+      .flex-container {
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 10px;
+        /* align-items: center; */
+        flex-wrap: wrap;
+        padding: 30px;
+        gap: 20px;
+      }
+
+      .button {
+        font-size: 0.9rem;
+        font-family: 'Jura';
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 10px;
+        background-color: #f6ddd0;
+        cursor: pointer;
+        flex: 1 1 22%;  /* responsive sizing */
+        max-width: 200px;
+        text-align: center;
+        transition: box-shadow 0.2s;
+      }
+
+      .button:hover {
+        box-shadow: 0 12px 16px rgba(0, 0, 0, 0.24), 0 17px 50px rgba(0, 0, 0, 0.19);
+      }
+
+      @media (max-width: 900px) {
+        .page-header {
+          flex-wrap: nowrap;
+          padding: 30px;
+          gap: 10px;
+        }
+
+        .hero-heading {
+          font-size: 28px;
+          max-width: 40%;
+        }
+
+        .flex-container {
+          max-width: 60%;
+        }
+
+        .button {
+          flex: 1 1 45%;
+        }
+      }
+
+      /* @media (max-width: 900px) {
+        .button {
+          flex: 1 1 45%;
+        }
+      }
+
+      @media (max-width: 500px) {
+        .button {
+          flex: 1 1 90%;
+        }
+      } */
+
+      .button-section {
+        max-width: 900px;
+        margin: 200px auto 0 auto; /* Pushes buttons below h1 */
+        padding: 20px;
+        /* border: 2px solid #ccc; optional */
+      }
+
+
+      body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      .content-section {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 60px 100px;
+        flex-wrap: wrap;
+        gap: 50px;
+      }
+
+      #canvas-container {
+        width: 1000px;
+        height: 750px;
+        border: none;
+        background-color: #fffaf4; /* optional placeholder */
+        flex-shrink: 0;
+      }
+
+      .about_me {
+        font-family: 'Josefin Slab';
+        max-width: 390px;
+        animation: fadeInRight 1.2s ease-out forwards;
+        opacity: 1;
+        margin-top: 100px;
+        margin-left: 5px;
+      }
+
+      .site-footer {
+        text-align: center;
+        margin-top: 30px;
+        padding: 20px;
+        font-family: 'Josefin Slab', serif;
+        color: #333;
+        background-color: #fffaf4;
+      }
+
+      .footer-line {
+        border: none;
+        border-top: 1px solid #aaa;
+        margin: 40px auto 20px auto;
+        width: 80%;
+      }
+
+      @keyframes growLine {
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
+      }
+
+      @keyframes fadeInRight {
+        from {
+          opacity: 0;
+          transform: translateX(50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @media (max-width: 1000px) {
+        .content-section {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        #canvas-container {
+          width: 100%;
+          max-width: 100%;
+          height: auto;
+        }
+
+        .about_me {
+          max-width: 90%;
+          animation: fadeInUp 1.2s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="page-header">
+      <h1>Hello World!<br>I am Aayush Rath</h1>
+      <div class="flex-container">
+        <button class="button">About&nbspMe</button>
+        <button class="button">Projects</button>
+        <button class="button">Articles</button>
+        <button class="button">Contact</button>
+      </div>
+    </header>
+    
+    <div class="horizontal_line"></div>
+    <div class="content-section">
+      <div id="canvas-container"></div>
+      <div class="about_me">I am a Robotics Enthusiast.
+        I love reading papers, literally anything 
+        related to mathematics, computer science, 
+        or artificial intelligence. I still love 
+        doing mechanical stuff, that’s why CAD and 
+        Simulations are my strongest suits. <br><br>
+        I did my Bachelors in Ocean Engineering from 
+        IIT Madras and I strive to become a polymath 
+        in this Kal Yug we live in. <br><br>
+        Get in touch with me if you want to 
+        brainstorm on some awesome ideas, need 
+        my help with resolving ROS2 errors or 
+        just talk about fun stuff.</div>
+      </div>
+
+  <script type="module" src="main.js"></script>
+
+  <footer class="site-footer">
+    <hr class="footer-line">
+    <p>&copy; 2025 Aayush Rath. All rights reserved.</p>
+    <p><a href="aayushrath@outlook.com">E-Mail</a></p>
+  </footer>
+  </body>
+</html>
