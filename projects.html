@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Aayush Rath">
+    <meta name="description" content="A website to write my blogs and my projects">
+    <title>Aayush Rath</title>
+    <link rel="icon" href="assets\images\screw-removebg-preview.png">
+    <link href='https://fonts.googleapis.com/css?family=Josefin Slab' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Jura' rel='stylesheet'>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/"
+        }
+      }
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html{
+            font-size: 22px;
+            background-color: #fffaf4;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: 'Montserrat';
+        }
+
+        .horizontal_line {
+            width: 100%;
+            border-top: 1px solid black;
+            margin-top: 30px;
+            animation: growLine 1.2s ease-out forwards;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 60px;
+            gap: 20px;
+            flex-wrap: nowrap;
+        }
+
+        .site-footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            font-family: 'Josefin Slab', serif;
+            color: #333;
+            background-color: #fffaf4;
+        }
+
+        .footer-line {
+            border: none;
+            border-top: 1px solid #aaa;
+            margin: 40px auto 20px auto;
+            width: 80%;
+        }
+
+        @keyframes growLine {
+            from {
+            width: 0;
+            }
+            to {
+            width: 100%;
+            }
+        }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Projects</h1>
+    </header>
+    
+    <div class="horizontal_line"></div>
+
+  <footer class="site-footer">
+    <hr class="footer-line">
+    <p>&copy; 2025 Aayush Rath. All rights reserved.</p>
+    <p><a href="aayushrath@outlook.com">E-Mail</a></p>
+  </footer>
+  </body>
+</html>

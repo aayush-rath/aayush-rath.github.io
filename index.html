@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="author" content="Aayush Rath">
     <meta name="description" content="A website to write my blogs and my projects">
-    <title>My First Webpage</title>
+    <title>Aayush Rath</title>
     <link rel="icon" href="assets\images\screw-removebg-preview.png">
     <link href='https://fonts.googleapis.com/css?family=Josefin Slab' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
@@ -63,7 +63,6 @@
         display: flex;
         justify-content: space-evenly;
         margin-top: 10px;
-        /* align-items: center; */
         flex-wrap: wrap;
         padding: 30px;
         gap: 20px;
@@ -77,7 +76,7 @@
         border-radius: 10px;
         background-color: #f6ddd0;
         cursor: pointer;
-        flex: 1 1 22%;  /* responsive sizing */
+        flex: 1 1 22%;
         max-width: 200px;
         text-align: center;
         transition: box-shadow 0.2s;
@@ -108,23 +107,10 @@
         }
       }
 
-      /* @media (max-width: 900px) {
-        .button {
-          flex: 1 1 45%;
-        }
-      }
-
-      @media (max-width: 500px) {
-        .button {
-          flex: 1 1 90%;
-        }
-      } */
-
       .button-section {
         max-width: 900px;
-        margin: 200px auto 0 auto; /* Pushes buttons below h1 */
+        margin: 200px auto 0 auto;
         padding: 20px;
-        /* border: 2px solid #ccc; optional */
       }
 
 
@@ -159,6 +145,11 @@
         opacity: 1;
         margin-top: 100px;
         margin-left: 5px;
+      }
+
+      a {
+          color: #0060B6;
+          text-decoration: none;
       }
 
       .site-footer {
@@ -232,9 +223,9 @@
     <header class="page-header">
       <h1>Hello World!<br>I am Aayush Rath</h1>
       <div class="flex-container">
-        <button class="button">About&nbspMe</button>
-        <button class="button">Projects</button>
-        <button class="button">Articles</button>
+        <a href="./resume.html" class="button">Resume</a>
+        <a href="./projects.html" class="button">Projects</a>
+        <a href="./articles.html" class="button">Articles</a>
         <button class="button">Contact</button>
       </div>
     </header>
