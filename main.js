@@ -30,6 +30,15 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(1000, 750);
 renderer.setPixelRatio(window.devicePixelRatio);
 
+window.addEventListener('resize', () => {
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+
+  renderer.setSize(width, height);
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+});
+
 const container = document.getElementById('canvas-container');
 if (container) {
   container.appendChild(renderer.domElement);
