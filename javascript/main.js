@@ -39,6 +39,26 @@ window.addEventListener('resize', () => {
   camera.updateProjectionMatrix();
 });
 
+window.sceneReady = true;
+window.updateThreeSceneForDarkMode = updateThreeSceneForDarkMode;
+
+document.dispatchEvent(new Event("sceneReady"));
+
+function updateThreeSceneForDarkMode(isDark) {
+  if (isDark) {
+    scene.background = new THREE.Color(0x222222);
+    torusKnot.material.color.set(0xdddddd);
+    light.intensity = 0.4;
+  } else {
+    scene.background = new THREE.Color(0xfffaf4);
+    torusKnot.material.color.set(0x9ac5ed);
+    light.intensity = 0.8;
+  }
+  renderer.render(scene, camera);
+}
+
+window.updateThreeSceneForDarkMode = updateThreeSceneForDarkMode;
+
 const container = document.getElementById('canvas-container');
 if (container) {
   container.appendChild(renderer.domElement);
