@@ -20,239 +20,286 @@
       }
     </script>
     <style>
-        * {
-            box-sizing: border-box;
-        }
+      * {
+          box-sizing: border-box;
+      }
 
-        html{
-            font-size: 22px;
-            background-color: #fffaf4;
-        }
+      html{
+          font-size: 22px;
+      }
 
-        h1 {
-            text-align: center;
-            font-family: 'Montserrat';
-        }
-
-        .horizontal_line {
-            width: 100%;
-            border-top: 1px solid black;
-            margin-top: 30px;
-            animation: growLine 1.2s ease-out forwards;
-        }
-
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 40px 60px;
-            gap: 20px;
-            flex-wrap: nowrap;
-        }
-
-        .site-footer {
-            text-align: center;
-            margin-top: 30px;
-            padding: 20px;
-            font-family: 'Josefin Slab', serif;
-            color: #333;
-            background-color: #fffaf4;
-        }
-
-        .footer-line {
-            border: none;
-            border-top: 1px solid #aaa;
-            margin: 40px auto 20px auto;
-            width: 80%;
-        }
-
-        .home-button {
-          position: absolute;
-          top: 15px;
-          right: 30px;
-          background-color: #fffaf4;
-          color: #222;
-          padding: 6px 12px;
-          border-radius: 6px;
-          transition: background-color 0.3s, transform 0.2s;
-          z-index: 10;
-          margin-right: 50px;
-          margin-top: 10px;
-        }
-
-        .home-button:hover {
-          box-shadow: 0 12px 16px rgba(0, 0, 0, 0.24), 0 17px 50px rgba(0, 0, 0, 0.19);;
-        }
-
-        @keyframes growLine {
-            from {
-            width: 0;
-            }
-            to {
-            width: 100%;
-            }
-        }
-
-        .article-section{
-          font-family: 'Montserrat';
-          font-weight: 100;
-          font-size: 30px;
-          margin-top: 30px;
-          margin-bottom: 30px;
-        }
-
-        .gallery-container {
-          column-count: 3;
-          column-gap: 20px;
-          padding: 30px;
-        }
-
-        .gallery-item {
-          break-inside: avoid;
-          margin-bottom: 20px;
-          position: relative;
-          overflow: hidden;
-          border-radius: 8px;
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-        }
-
-        .gallery-item img {
-          width: 100%;
-          display: block;
-          border-radius: 8px;
-          transition: transform 0.3s ease;
-        }
-
-        .gallery-item:hover img {
-          transform: scale(1.05);
-          cursor: pointer;
-        }
-
-        .overlay {
-          position: absolute;
-          bottom: 0;
-          background: rgba(0, 0, 0, 0.7);
-          color: white;
-          width: 100%;
-          padding: 10px;
-          transform: translateY(100%);
-          transition: transform 0.3s ease;
-        }
-
-        .gallery-item:hover .overlay {
-          transform: translateY(0%);
-        }
-
-        @media (max-width: 480px) {
-          .gallery-container {
-            column-count: 2;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .gallery-container {
-            column-count: 1;
-          }
-        }
-
-        .lightbox {
-          display: none;
-          position: fixed;
-          z-index: 1000;
-          padding-top: 60px;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          overflow: auto;
-          background-color: rgba(0,0,0,0.9);
+      h1 {
           text-align: center;
-        }
+          font-family: 'Montserrat';
+      }
 
-        .lightbox-img {
-          max-width: 90%;
-          max-height: 80%;
-          transition: transform 0.25s ease;
-          cursor: zoom-in;
-        }
+      .horizontal_line {
+          width: 100%;
+          border-top: 1px solid black;
+          margin-top: 30px;
+          animation: growLine 1.2s ease-out forwards;
+      }
 
-        .lightbox-img.zoomed {
-          transform: scale(2);
-          cursor: zoom-out;
-        }
+      body.dark-mode .horizontal_line {
+        border-top: 1px solid white;
+      }
 
-        .close {
-          position: absolute;
-          top: 30px;
-          right: 50px;
-          color: white;
-          font-size: 40px;
-          font-weight: bold;
-          cursor: pointer;
-          z-index: 1001;
-        }
-
-        .blog-menu {
+      .page-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          background-color: #222;
-          padding: 15px 30px;
-        }
-
-        .blog-menu .logo {
-          color: white;
-          font-size: 1.5rem;
-          font-weight: bold;
-        }
-
-        .nav-links {
-          list-style: none;
-          display: flex;
+          padding: 40px 60px;
           gap: 20px;
-        }
+          flex-wrap: nowrap;
+      }
 
-        .nav-links li a {
-          color: white;
-          text-decoration: none;
-          padding: 8px 12px;
-          transition: background-color 0.3s ease;
-        }
+      .site-footer {
+          text-align: center;
+          margin-top: 30px;
+          padding: 20px;
+          font-family: 'Josefin Slab', serif;
+          color: #333;
+          background-color: #fffaf4;
+      }
 
-        .nav-links li a:hover {
-          background-color: #444;
-          border-radius: 4px;
-        }
+      .footer-line {
+          border: none;
+          border-top: 1px solid #aaa;
+          margin: 40px auto 20px auto;
+          width: 80%;
+      }
 
-        .blog-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: 20px;
-          padding: 40px;
-        }
+      body.dark-mode .site-footer{
+        background-color: #222222;
+        color: white;
+      }
 
-        .blog-card {
-          display: block;
-          overflow: hidden;
-          border-radius: 10px;
-          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-          transition: transform 0.3s ease;
-        }
+      .home-button {
+        position: absolute;
+        top: 15px;
+        right: 30px;
+        background-color: #fffaf4;
+        color: #222;
+        padding: 6px 12px;
+        border-radius: 6px;
+        transition: background-color 0.3s, transform 0.2s;
+        z-index: 10;
+        margin-right: 50px;
+        margin-top: 10px;
+      }
 
-        .blog-card img {
+      .home-button:hover {
+        box-shadow: 0 12px 16px rgba(0, 0, 0, 0.24), 0 17px 50px rgba(0, 0, 0, 0.19);;
+      }
+
+      @keyframes growLine {
+          from {
+          width: 0;
+          }
+          to {
           width: 100%;
-          height: 250px;
-          object-fit: cover;
-          transition: transform 0.3s ease;
-        }
+          }
+      }
 
-        .blog-card:hover {
-          transform: scale(1.05);
-        }
+      .article-section{
+        font-family: 'Montserrat';
+        font-weight: 100;
+        font-size: 30px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        margin-left: 40px;
+      }
 
-        .blog-card:hover img {
-          transform: scale(1.1);
+      .gallery-container {
+        column-count: 3;
+        column-gap: 20px;
+        padding: 30px;
+      }
+
+      .gallery-item {
+        break-inside: avoid;
+        margin-bottom: 20px;
+        font-family: 'Jura';
+        font-size: 80%;
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      }
+
+      .gallery-item img {
+        width: 100%;
+        display: block;
+        border-radius: 8px;
+        transition: transform 0.3s ease;
+      }
+
+      .gallery-item:hover img {
+        transform: scale(1.05);
+        cursor: pointer;
+      }
+
+      .overlay {
+        position: absolute;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        width: 100%;
+        padding: 10px;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+      }
+
+      .gallery-item:hover .overlay {
+        transform: translateY(0%);
+      }
+
+      @media (max-width: 480px) {
+        .gallery-container {
+          column-count: 2;
         }
+      }
+
+      @media (max-width: 480px) {
+        .gallery-container {
+          column-count: 1;
+        }
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background-color: #fffaf4;
+      }
+
+      body.dark-mode {
+        background-color: #222222;
+        color: #f5f5f5;
+      }
+
+
+      .dark-mode-toggle {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        top: 15px;
+        left: 30px;
+        padding: 6px;
+        border: none;
+        border-radius: 6px;
+        background-color: #f6ddd0;
+        color: #000;
+        cursor: pointer;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        transition: background-color 0.3s;
+      }
+
+      body.dark-mode .dark-mode-toggle {
+        background-color: #333;
+        color: #fff;
+      }
+
+      .lightbox {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        padding-top: 60px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.9);
+        text-align: center;
+      }
+
+      .lightbox-img {
+        max-width: 90%;
+        max-height: 80%;
+        transition: transform 0.25s ease;
+        cursor: zoom-in;
+      }
+
+      .lightbox-img.zoomed {
+        transform: scale(2);
+        cursor: zoom-out;
+      }
+
+      .close {
+        position: absolute;
+        top: 30px;
+        right: 50px;
+        color: white;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 1001;
+      }
+
+      .blog-menu {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #222;
+        padding: 15px 30px;
+      }
+
+      .blog-menu .logo {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+      }
+
+      .nav-links li a {
+        color: white;
+        text-decoration: none;
+        padding: 8px 12px;
+        transition: background-color 0.3s ease;
+      }
+
+      .nav-links li a:hover {
+        background-color: #444;
+        border-radius: 4px;
+      }
+
+      .blog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        padding: 40px;
+      }
+
+      .blog-card {
+        display: block;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+      }
+
+      .blog-card img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .blog-card:hover {
+        transform: scale(1.05);
+      }
+
+      .blog-card:hover img {
+        transform: scale(1.1);
+      }
 
     </style>
   </head>
@@ -260,6 +307,7 @@
   <body>
     <header>
       <h1>Articles & Blogs</h1>
+      <button id="darkModeToggle" class="dark-mode-toggle">🌙</button>
       <a href="../index.html" class="home-button">
         <img src="../assets/images/home_button.png" alt="Home" width="40px">
       </a>
@@ -353,6 +401,36 @@
       document.addEventListener('keydown', (e) => {
         if (e.key === "Escape") lightbox.style.display = 'none';
       });
+
+      const enabled = localStorage.getItem('darkMode') === 'enabled';
+      if (enabled) {
+        document.body.classList.add('dark-mode');
+      }
+
+          const toggleBtn = document.getElementById('darkModeToggle');
+
+      const isDarkMode = () => document.body.classList.contains('dark-mode');
+
+      function applyDarkModePreference() {
+        const enabled = localStorage.getItem('darkMode') === 'enabled';
+        if (enabled) document.body.classList.add('dark-mode');
+
+        if (window.updateThreeSceneForDarkMode)
+          updateThreeSceneForDarkMode(enabled);
+      }
+
+      document.addEventListener('sceneReady', applyDarkModePreference);
+
+      toggleBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const enabled = isDarkMode();
+        localStorage.setItem('darkMode', enabled ? 'enabled' : 'disabled');
+
+        if (window.updateThreeSceneForDarkMode)
+          updateThreeSceneForDarkMode(enabled);
+      });
+
+      applyDarkModePreference();
     </script>
 
     <footer class="site-footer">

@@ -36,6 +36,10 @@
         animation: growLine 1.2s ease-out forwards;
       }
 
+      body.dark-mode .horizontal_line {
+        border-top: 1px solid white;
+      }
+
       .page-header {
         display: flex;
         justify-content: space-between;
@@ -50,7 +54,7 @@
         font-family: 'Montserrat', sans-serif;
         font-size: 40px;
         font-weight: 500;
-        margin: 60px 0 0 87px;
+        margin: 20px 0 0 87px;
         max-width: 45%;
       }
 
@@ -80,6 +84,19 @@
         max-width: 200px;
         text-align: center;
         transition: box-shadow 0.2s;
+      }
+
+      body.dark-mode .button {
+        background-color: #333;
+        text-decoration: none;
+      }
+
+      a {
+        color: #000;
+      }
+
+      body.dark-mode a{
+        color: white;
       }
 
       .button:hover {
@@ -121,6 +138,11 @@
         overflow-y: auto;
       }
 
+      body.dark-mode {
+        background-color: #222222;
+        color: #f5f5f5;
+      }
+
       .content-section {
         display: flex;
         justify-content: center;
@@ -137,6 +159,7 @@
         background-color: #fffaf4;
         flex-shrink: 0;
         margin-right: 10px;
+        margin-left: 10px;
       }
 
       .about_me {
@@ -167,6 +190,11 @@
         border-top: 1px solid #aaa;
         margin: 40px auto 20px auto;
         width: 80%;
+      }
+
+      body.dark-mode .site-footer{
+        background-color: #222222;
+        color: white;
       }
 
       @keyframes growLine {
@@ -217,12 +245,35 @@
           }
         }
       }
+
+      .dark-mode-toggle {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        top: 15px;
+        left: 30px;
+        padding: 6px;
+        border: none;
+        border-radius: 6px;
+        background-color: #f6ddd0;
+        color: #000;
+        cursor: pointer;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        transition: background-color 0.3s;
+      }
+
+      body.dark-mode .dark-mode-toggle {
+        background-color: #333;
+        color: #fff;
+      }
     </style>
   </head>
 
   <body>
     <header class="page-header">
       <h1>Hello World!<br>I am Aayush Rath</h1>
+      <button id="darkModeToggle" class="dark-mode-toggle">🌙</button>
       <div class="flex-container">
         <a href="./pages/resume.html" class="button">Resume</a>
         <a href="./pages/projects.html" class="button">Projects</a>
@@ -253,8 +304,34 @@
 
   <footer class="site-footer">
     <hr class="footer-line">
-    <p>&copy; 2025 Aayush Rath. All rights reserved.</p>
-    <p><a href="aayushrath@outlook.com">E-Mail</a></p>
+    &copy; 2025 Aayush Rath. All rights reserved.
   </footer>
+
+  <script>
+    const toggleBtn = document.getElementById('darkModeToggle');
+
+    const isDarkMode = () => document.body.classList.contains('dark-mode');
+
+    function applyDarkModePreference() {
+      const enabled = localStorage.getItem('darkMode') === 'enabled';
+      if (enabled) document.body.classList.add('dark-mode');
+
+      if (window.updateThreeSceneForDarkMode)
+        updateThreeSceneForDarkMode(enabled);
+    }
+
+    document.addEventListener('sceneReady', applyDarkModePreference);
+
+    toggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      const enabled = isDarkMode();
+      localStorage.setItem('darkMode', enabled ? 'enabled' : 'disabled');
+
+      if (window.updateThreeSceneForDarkMode)
+        updateThreeSceneForDarkMode(enabled);
+    });
+
+    applyDarkModePreference();
+  </script>
   </body>
 </html>
