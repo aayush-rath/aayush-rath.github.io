@@ -29,14 +29,15 @@
       }
 
       h1 {
-          text-align: center;
           font-family: 'Montserrat';
+          margin-bottom: 70px;
+          padding-top: 30px;
+          font-weight: 100;
       }
 
       .horizontal_line {
           width: 100%;
           border-top: 1px solid black;
-          margin-top: 30px;
           animation: growLine 1.2s ease-out forwards;
       }
 
@@ -45,12 +46,23 @@
       }
 
       .page-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 40px 60px;
-          gap: 20px;
-          flex-wrap: nowrap;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 40px 60px;
+        min-height: 250px;
+        background-color: #fffaf4;
+        background-image: radial-gradient(#999 9%, transparent 7%);
+        background-size: 20px 20px;
+        background-position: center;
+        z-index: 1;
+      }
+
+      body.dark-mode .page-header {
+        background-color: #222222;
+        background-image: radial-gradient(#aaa 6%, transparent 7%);
       }
 
       .site-footer {
@@ -300,18 +312,25 @@
       .blog-card:hover img {
         transform: scale(1.1);
       }
-
     </style>
   </head>
 
   <body>
-    <header>
+
+    <header class="page-header">
       <h1>Articles & Blogs</h1>
       <button id="darkModeToggle" class="dark-mode-toggle">🌙</button>
       <a href="../index.html" class="home-button">
         <img src="../assets/images/home_button.png" alt="Home" width="40px">
       </a>
     </header>
+    <!-- <header>
+      <h1>Articles & Blogs</h1>
+      <button id="darkModeToggle" class="dark-mode-toggle">🌙</button>
+      <a href="../index.html" class="home-button">
+        <img src="../assets/images/home_button.png" alt="Home" width="40px">
+      </a>
+    </header> -->
     
     <div class="horizontal_line"></div>
 

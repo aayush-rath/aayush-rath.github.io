@@ -32,7 +32,6 @@
       .horizontal_line {
         width: 100%;
         border-top: 1px solid black;
-        margin-top: 30px;
         animation: growLine 1.2s ease-out forwards;
       }
 
@@ -41,21 +40,38 @@
       }
 
       .page-header {
+        text-align: center;
+        background-color: #fffaf4;
+        background-image: radial-gradient(#999 9%, transparent 7%);
+        background-size: 20px 20px;
+        background-position: center;
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 40px 60px;
         gap: 20px;
         flex-wrap: nowrap;
+        z-index: 1;
+        min-height: 250px;
+      }
+
+      body.dark-mode .page-header {
+        background-color: #222222;
+        background-image: radial-gradient(#aaa 6%, transparent 7%);
       }
 
       h1 {
+        text-align: center;
         position: relative;
         font-family: 'Montserrat', sans-serif;
         font-size: 40px;
         font-weight: 500;
         margin: 20px 0 0 87px;
         max-width: 45%;
+      }
+
+      body.dark-mode h1 {
+        font-weight: 1000;
       }
 
       p {
@@ -110,7 +126,8 @@
           gap: 10px;
         }
 
-        .hero-heading {
+        h1 {
+          text-align: center;
           font-size: 28px;
           max-width: 40%;
         }
@@ -147,7 +164,7 @@
         display: flex;
         justify-content: center;
         align-items: flex-start;
-        padding: 60px 100px;
+        padding: 60px 50px;
         flex-wrap: wrap;
         gap: 50px;
       }
@@ -158,17 +175,20 @@
         border: none;
         background-color: #fffaf4;
         flex-shrink: 0;
-        margin-right: 10px;
-        margin-left: 10px;
+        margin-right: 40px;
+        margin-left: 40px;
       }
 
       .about_me {
         font-family: 'Josefin Slab';
-        max-width: 390px;
+        max-width: 500px;
         animation: fadeInRight 1.2s ease-out forwards;
+        text-align: left;
         opacity: 1;
-        margin-top: 100px;
+        margin-top: 50px;
         margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 40px;
       }
 
       a {
@@ -267,6 +287,20 @@
         background-color: #333;
         color: #fff;
       }
+
+      .img-center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 50px;
+        width: 100%;
+        content: url('./assets/images/IMG_20230715_162625.jpg');
+        border-radius: 10px;
+      }
+      
+      body.dark-mode .img-center {
+        content: url('./assets/images/BatmanAtNight.png');
+      }
     </style>
   </head>
 
@@ -281,7 +315,6 @@
         <a href="./pages/game.html" class="button">Control</a>
       </div>
     </header>
-    
     <div class="horizontal_line"></div>
     <div class="content-section">
       <div id="canvas-container"></div>
@@ -297,41 +330,43 @@
         Get in touch with me if you want to 
         brainstorm on some awesome ideas, need 
         my help with resolving ROS2 errors or 
-        just talk about fun stuff.</div>
+        just talk about fun stuff.<br>
+        <img src="./assets/images/IMG_20230715_162625.jpg" alt="Me" width="300px" class="img-center">
       </div>
+    </div>
 
-  <script type="module" src="./javascript/main.js"></script>
+    <script type="module" src="./javascript/main.js"></script>
 
-  <footer class="site-footer">
-    <hr class="footer-line">
-    &copy; 2025 Aayush Rath. All rights reserved.
-  </footer>
+    <footer class="site-footer">
+      <hr class="footer-line">
+      &copy; 2025 Aayush Rath. All rights reserved.
+    </footer>
 
-  <script>
-    const toggleBtn = document.getElementById('darkModeToggle');
+    <script>
+      const toggleBtn = document.getElementById('darkModeToggle');
 
-    const isDarkMode = () => document.body.classList.contains('dark-mode');
+      const isDarkMode = () => document.body.classList.contains('dark-mode');
 
-    function applyDarkModePreference() {
-      const enabled = localStorage.getItem('darkMode') === 'enabled';
-      if (enabled) document.body.classList.add('dark-mode');
+      function applyDarkModePreference() {
+        const enabled = localStorage.getItem('darkMode') === 'enabled';
+        if (enabled) document.body.classList.add('dark-mode');
 
-      if (window.updateThreeSceneForDarkMode)
-        updateThreeSceneForDarkMode(enabled);
-    }
+        if (window.updateThreeSceneForDarkMode)
+          updateThreeSceneForDarkMode(enabled);
+      }
 
-    document.addEventListener('sceneReady', applyDarkModePreference);
+      document.addEventListener('sceneReady', applyDarkModePreference);
 
-    toggleBtn.addEventListener('click', () => {
-      document.body.classList.toggle('dark-mode');
-      const enabled = isDarkMode();
-      localStorage.setItem('darkMode', enabled ? 'enabled' : 'disabled');
+      toggleBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const enabled = isDarkMode();
+        localStorage.setItem('darkMode', enabled ? 'enabled' : 'disabled');
 
-      if (window.updateThreeSceneForDarkMode)
-        updateThreeSceneForDarkMode(enabled);
-    });
+        if (window.updateThreeSceneForDarkMode)
+          updateThreeSceneForDarkMode(enabled);
+      });
 
-    applyDarkModePreference();
-  </script>
+      applyDarkModePreference();
+    </script>
   </body>
 </html>
