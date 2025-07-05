@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Aayush Rath">
+    <meta name="description" content="A website to write my blogs and my projects">
+    <title>Aayush Rath</title>
+    <link rel="icon" href="./assets/images/screw-removebg-preview.png">
+    <link href='https://fonts.googleapis.com/css?family=Josefin Slab' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Jura' rel='stylesheet'>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/"
+        }
+      }
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html{
+            font-size: 22px;
+            background-color: #fffaf4;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: 'Montserrat';
+        }
+
+        .horizontal_line {
+            width: 100%;
+            border-top: 1px solid black;
+            margin-top: 30px;
+            animation: growLine 1.2s ease-out forwards;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 60px;
+            gap: 20px;
+            flex-wrap: nowrap;
+        }
+
+        .site-footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            font-family: 'Josefin Slab', serif;
+            color: #333;
+            background-color: #fffaf4;
+        }
+
+        .footer-line {
+            border: none;
+            border-top: 1px solid #aaa;
+            margin: 40px auto 20px auto;
+            width: 80%;
+        }
+
+        .home-button {
+          position: absolute;
+          top: 15px;
+          right: 30px;
+          background-color: #fffaf4;
+          color: #222;
+          padding: 6px 12px;
+          border-radius: 6px;
+          transition: background-color 0.3s, transform 0.2s;
+          z-index: 10;
+          margin-right: 50px;
+          margin-top: 10px;
+        }
+
+        .home-button:hover {
+          box-shadow: 0 12px 16px rgba(0, 0, 0, 0.24), 0 17px 50px rgba(0, 0, 0, 0.19);;
+        }
+
+        @keyframes growLine {
+            from {
+            width: 0;
+            }
+            to {
+            width: 100%;
+            }
+        }
+
+        .article-section{
+          font-family: 'Montserrat';
+          font-weight: 100;
+          font-size: 30px;
+          margin-top: 30px;
+          margin-bottom: 30px;
+        }
+
+        .gallery-container {
+          column-count: 3;
+          column-gap: 20px;
+          padding: 30px;
+        }
+
+        .gallery-item {
+          break-inside: avoid;
+          margin-bottom: 20px;
+          position: relative;
+          overflow: hidden;
+          border-radius: 8px;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-item img {
+          width: 100%;
+          display: block;
+          border-radius: 8px;
+          transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+          transform: scale(1.05);
+          cursor: pointer;
+        }
+
+        .overlay {
+          position: absolute;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.7);
+          color: white;
+          width: 100%;
+          padding: 10px;
+          transform: translateY(100%);
+          transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .overlay {
+          transform: translateY(0%);
+        }
+
+        @media (max-width: 480px) {
+          .gallery-container {
+            column-count: 2;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .gallery-container {
+            column-count: 1;
+          }
+        }
+
+        .lightbox {
+          display: none;
+          position: fixed;
+          z-index: 1000;
+          padding-top: 60px;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: rgba(0,0,0,0.9);
+          text-align: center;
+        }
+
+        .lightbox-img {
+          max-width: 90%;
+          max-height: 80%;
+          transition: transform 0.25s ease;
+          cursor: zoom-in;
+        }
+
+        .lightbox-img.zoomed {
+          transform: scale(2);
+          cursor: zoom-out;
+        }
+
+        .close {
+          position: absolute;
+          top: 30px;
+          right: 50px;
+          color: white;
+          font-size: 40px;
+          font-weight: bold;
+          cursor: pointer;
+          z-index: 1001;
+        }
+
+        .blog-menu {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background-color: #222;
+          padding: 15px 30px;
+        }
+
+        .blog-menu .logo {
+          color: white;
+          font-size: 1.5rem;
+          font-weight: bold;
+        }
+
+        .nav-links {
+          list-style: none;
+          display: flex;
+          gap: 20px;
+        }
+
+        .nav-links li a {
+          color: white;
+          text-decoration: none;
+          padding: 8px 12px;
+          transition: background-color 0.3s ease;
+        }
+
+        .nav-links li a:hover {
+          background-color: #444;
+          border-radius: 4px;
+        }
+
+        .blog-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 20px;
+          padding: 40px;
+        }
+
+        .blog-card {
+          display: block;
+          overflow: hidden;
+          border-radius: 10px;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+          transition: transform 0.3s ease;
+        }
+
+        .blog-card img {
+          width: 100%;
+          height: 250px;
+          object-fit: cover;
+          transition: transform 0.3s ease;
+        }
+
+        .blog-card:hover {
+          transform: scale(1.05);
+        }
+
+        .blog-card:hover img {
+          transform: scale(1.1);
+        }
+
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Articles & Blogs</h1>
+      <a href="../index.html" class="home-button">
+        <img src="../assets/images/home_button.png" alt="Home" width="40px">
+      </a>
+    </header>
+    
+    <div class="horizontal_line"></div>
+
+    <div class="article-section">Blogs</div>
+    <div class="horizontal_line"></div>
+
+    <main class="blog-grid">
+      <a href="../blogs/spin-glass-ai.html" class="blog-card">
+        <img src="./images/blog1.jpg" alt="Spin-Glass & AI">
+      </a>
+    </main>
+
+    <div class="article-section">Blender Renders</div>
+    <div class="horizontal_line"></div>
+
+    <div class="gallery-container">
+      <div class="gallery-item">
+        <img src="../blender-renders/donut.png" alt="Donuts">
+        <div class="overlay">
+          <p>The Hello World of Blender. Donuts!</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="../blender-renders/cave.png" alt="Cave">
+        <div class="overlay">
+          <p>Spooky Crystal Lighting inspired by Blender Guru</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="../blender-renders/lamp post 2.png" alt="Lamp-Post">
+        <div class="overlay">
+          <p>Noob but a cute design. Kinda Eerie!</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="../blender-renders/screw.png" alt="Screw">
+        <div class="overlay">
+          <p>I love Hex-Headed Bolts for some reason</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="../blender-renders/room.png" alt="Room">
+        <div class="overlay">
+          <p>Playing with voxels</p>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="../blender-renders/StudioLighting.png" alt="Chair">
+        <div class="overlay">
+          <p>Studio Lights and a chair!</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="lightbox" class="lightbox">
+      <span class="close">&times;</span>
+      <img class="lightbox-img" id="lightbox-img">
+    </div>
+
+    <script>
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const closeBtn = document.querySelector('.close');
+
+      document.querySelectorAll('.gallery-item img').forEach(img => {
+        img.addEventListener('click', () => {
+          lightbox.style.display = 'block';
+          lightboxImg.src = img.src;
+          lightboxImg.classList.remove('zoomed');
+        });
+      });
+
+      closeBtn.onclick = () => lightbox.style.display = 'none';
+      lightbox.onclick = (e) => {
+        if (e.target !== lightboxImg) lightbox.style.display = 'none';
+      };
+
+      lightboxImg.onclick = () => {
+        lightboxImg.classList.toggle('zoomed');
+      };
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === "Escape") lightbox.style.display = 'none';
+      });
+    </script>
+
+    <footer class="site-footer">
+      <hr class="footer-line">
+      <p>&copy; 2025 Aayush Rath. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
