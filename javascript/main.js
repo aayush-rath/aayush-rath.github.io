@@ -46,15 +46,31 @@ document.dispatchEvent(new Event("sceneReady"));
 
 function updateThreeSceneForDarkMode(isDark) {
   if (isDark) {
-    scene.background = new THREE.Color(0x222222);
-    torusKnot.material.color.set(0xdddddd);
-    light.intensity = 0.4;
+    // scene.background = new THREE.Color(0x222222);
+    torusKnot.material.color.set(0xffffff);
+    light.intensity = 1.0;
   } else {
-    scene.background = new THREE.Color(0xfffaf4);
+    // scene.background = new THREE.Color(0xfffaf4);
     torusKnot.material.color.set(0x9ac5ed);
     light.intensity = 0.8;
   }
-  renderer.render(scene, camera);
+
+  const currentColor = scene.background.clone();
+  const targetColor = new THREE.Color(isDark ? 0x222222 : 0xfffaf4);
+  let progress = 0;
+
+  function animateBackground() {
+    progress += 0.02;
+    const lerpedColor = currentColor.clone().lerp(targetColor, progress);
+    scene.background = lerpedColor;
+    renderer.render(scene, camera);
+
+    if (progress < 1) {
+      requestAnimationFrame(animateBackground);
+    }
+  }
+
+  animateBackground();
 }
 
 window.updateThreeSceneForDarkMode = updateThreeSceneForDarkMode;
@@ -73,8 +89,8 @@ const controls = new OrbitControls(camera, renderer.domElement);
 function animate() {
   requestAnimationFrame(animate);
 
-  torusKnot.rotation.x += 0.01;
-  torusKnot.rotation.y += 0.01;
+  torusKnot.rotation.x += 0.005;
+  torusKnot.rotation.y += 0.005;
 
   controls.update();
   renderer.render(scene, camera);
