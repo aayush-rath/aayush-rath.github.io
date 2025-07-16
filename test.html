@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dark Mode Toggle</title>
+  <style>
+    body {
+      transition: background-color 0.3s, color 0.3s;
+      background-color: white;
+      color: black;
+    }
+
+    body.dark-mode {
+      background-color: #121212;
+      color: white;
+    }
+
+    .dark-mode-toggle {
+      font-size: 24px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="darkModeToggle" class="dark-mode-toggle">🌙</button>
+
+  <script>
+    const toggleButton = document.getElementById('darkModeToggle');
+
+    toggleButton.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+
+      // Toggle emoji based on current class
+      if (document.body.classList.contains('dark-mode')) {
+        toggleButton.textContent = '☀️';  // sun
+      } else {
+        toggleButton.textContent = '🌙';  // moon
+      }
+    });
+  </script>
+
+</body>
+</html>
+🛠 Common Fixes if 

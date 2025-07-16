@@ -1,0 +1,108 @@
+html{
+        font-size: 22px;
+        background-color: #fffaf4;
+      }
+
+      .horizontal_line {
+        width: 100%;
+        border-top: 1px solid black;
+        position: relative;
+        top: 40px;
+      }
+
+      h1 {
+        margin-top: 50px;
+        margin-left: 50px;
+        font-family: 'Montserrat';
+        font-weight: 5;
+        display: flexbox;
+      }
+
+      p {
+        font-family: 'Josefin Slab';
+        color: rgb(87, 1, 173);
+      }
+
+      .flex-container {
+        position: absolute;
+        display: flex;
+        top: 53px;
+        right: 61px;
+        align-items: right;
+        width: 957px;
+        height: 182px;
+      }
+
+      .button1 {
+        font-family: 'Jura';
+        font-size: 30px;
+        border: none;
+        height: 92px;
+        width: 170px;
+        border-radius: 10px;
+        background-color: #f6ddd0;
+        cursor: pointer;
+        position: absolute;
+        top: 0px;
+        right: 61px;
+        display: flexbox;
+      }
+
+      .button2 {
+        font-family: 'Jura';
+        font-size: 30px;
+        border: none;
+        height: 92px;
+        width: 170px;
+        border-radius: 10px;
+        background-color: #f6ddd0;
+        cursor: pointer;
+        position: absolute;
+        top: 0px;
+        right: 295px;
+      }
+
+      .button3 {
+        font-family: 'Jura';
+        font-size: 30px;
+        border: none;
+        height: 92px;
+        width: 170px;
+        border-radius: 10px;
+        background-color: #f6ddd0;
+        cursor: pointer;
+        position: absolute;
+        top: 0px;
+        right: 529px;
+      }
+
+      .button4 {
+        font-family: 'Jura';
+        font-size: 30px;
+        border: none;
+        height: 92px;
+        width: 170px;
+        border-radius: 10px;
+        background-color: #f6ddd0;
+        cursor: pointer;
+        position: absolute;
+        top: 45px;
+        right: 763px;
+        display: flexbox;
+      }
+
+      .button1:hover{
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+      }
+
+      .button2:hover{
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+      }
+
+      .button3:hover{
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+      }
+
+      .button4:hover{
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+      }

@@ -8,11 +8,11 @@ scene.background = new THREE.Color(0xfffaf4);
 // 2. Camera
 const camera = new THREE.PerspectiveCamera(
   75,
-  1,
+  3/4,
   0.1,
   1000
 );
-camera.position.z = 9;
+camera.position.z = 10;
 
 // 3. Torus
 const geometry = new THREE.TorusKnotGeometry( 3, 1, 100, 16 ); 
@@ -27,8 +27,14 @@ scene.add(light);
 
 // 5. Renderer
 const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(600, 600);
-renderer.setPixelRatio(window.devicePixelRatio);
+const container = document.getElementById('canvas-container');
+if (container) {
+  container.appendChild(renderer.domElement);
+} else {
+  console.error("No #canvas-container found");
+}
+renderer.setSize(container.clientWidth, container.clientHeight);
+renderer.setPixelRatio(container.devicePixelRatio);
 
 window.addEventListener('resize', () => {
   const width = container.clientWidth;
@@ -45,42 +51,31 @@ window.updateThreeSceneForDarkMode = updateThreeSceneForDarkMode;
 document.dispatchEvent(new Event("sceneReady"));
 
 function updateThreeSceneForDarkMode(isDark) {
-  if (isDark) {
-    // scene.background = new THREE.Color(0x222222);
-    torusKnot.material.color.set(0xffffff);
-    light.intensity = 1.0;
-  } else {
-    // scene.background = new THREE.Color(0xfffaf4);
-    torusKnot.material.color.set(0x9ac5ed);
-    light.intensity = 0.8;
-  }
+  const startColor = scene.background.clone();
+  const endColor = new THREE.Color(isDark ? 0x222222 : 0xfffaf4);
+  const duration = 500;
+  const startTime = performance.now();
 
-  const currentColor = scene.background.clone();
-  const targetColor = new THREE.Color(isDark ? 0x222222 : 0xfffaf4);
-  let progress = 0;
+  torusKnot.material.color.set(isDark ? 0xffffff : 0x9ac5ed);
+  light.intensity = isDark ? 1.0 : 0.8;
 
-  function animateBackground() {
-    progress += 0.02;
-    const lerpedColor = currentColor.clone().lerp(targetColor, progress);
-    scene.background = lerpedColor;
+  function animateBackground(time) {
+    const elapsed = time - startTime;
+    const t = Math.min(elapsed / duration, 1);
+
+    const lerped = startColor.clone().lerp(endColor, t);
+    scene.background = lerped;
     renderer.render(scene, camera);
 
-    if (progress < 1) {
+    if (t < 1) {
       requestAnimationFrame(animateBackground);
     }
   }
 
-  animateBackground();
+  requestAnimationFrame(animateBackground);
 }
 
 window.updateThreeSceneForDarkMode = updateThreeSceneForDarkMode;
-
-const container = document.getElementById('canvas-container');
-if (container) {
-  container.appendChild(renderer.domElement);
-} else {
-  console.error("No #canvas-container found");
-}
 
 // 6. Controls
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -89,8 +84,8 @@ const controls = new OrbitControls(camera, renderer.domElement);
 function animate() {
   requestAnimationFrame(animate);
 
-  torusKnot.rotation.x += 0.005;
-  torusKnot.rotation.y += 0.005;
+  torusKnot.rotation.x += 0.002;
+  torusKnot.rotation.y += 0.002;
 
   controls.update();
   renderer.render(scene, camera);
