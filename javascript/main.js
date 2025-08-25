@@ -5,15 +5,6 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xfffaf4);
 
-// 2. Camera
-const camera = new THREE.PerspectiveCamera(
-  75,
-  3/4,
-  0.1,
-  1000
-);
-camera.position.z = 10;
-
 // 3. Torus
 const geometry = new THREE.TorusKnotGeometry( 3, 1, 100, 16 ); 
 const material = new THREE.MeshStandardMaterial( { color: 0x9ac5ed, wireframe: true} ); 
@@ -36,6 +27,15 @@ if (container) {
 renderer.setSize(container.clientWidth, container.clientHeight);
 renderer.setPixelRatio(container.devicePixelRatio);
 
+// 2. Camera
+const camera = new THREE.PerspectiveCamera(
+  75,
+  container.clientWidth/container.clientHeight,
+  0.1,
+  1000
+);
+camera.position.z = 10;
+
 window.addEventListener('resize', () => {
   const width = container.clientWidth;
   const height = container.clientHeight;
@@ -53,7 +53,7 @@ document.dispatchEvent(new Event("sceneReady"));
 function updateThreeSceneForDarkMode(isDark) {
   const startColor = scene.background.clone();
   const endColor = new THREE.Color(isDark ? 0x222222 : 0xfffaf4);
-  const duration = 500;
+  const duration = 250;
   const startTime = performance.now();
 
   torusKnot.material.color.set(isDark ? 0xffffff : 0x9ac5ed);

@@ -114,7 +114,7 @@
       }
 
       .article-section{
-        font-family: 'Montserrat';
+        font-family: 'Josefin Slab';
         font-weight: 100;
         font-size: 30px;
         margin-top: 30px;
@@ -193,7 +193,7 @@
 
 
       .dark-mode-toggle {
-        position: absolute;
+        position: fixed;
         width: 50px;
         height: 50px;
         font-size: 20px;
@@ -207,6 +207,9 @@
         cursor: pointer;
         box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         transition: background-color 0.3s;
+
+        z-index: 9999;
+        pointer-events: auto;
       }
 
       body.dark-mode .dark-mode-toggle {
@@ -338,16 +341,10 @@
     
     <div class="horizontal_line"></div>
 
-    <div class="article-section">Blogs</div>
+    <div class="article-section">Technical</div>
     <div class="horizontal_line"></div>
 
     <main class="blog-grid">
-      <a href="../blogs/hopfield.html" class="blog-card">
-        <img src="./images/blog1.jpg" alt="Spin-Glass & AI">
-      </a>
-      <a href="../blogs/hopfield.html" class="blog-card">
-        <img src="./images/blog1.jpg" alt="Spin-Glass & AI">
-      </a>
       <a href="../blogs/hopfield.html" class="blog-card">
         <img src="./images/blog1.jpg" alt="Spin-Glass & AI">
       </a>
@@ -381,7 +378,7 @@
       <div class="gallery-item">
         <img src="../blender-renders/screw.png" alt="Screw">
         <div class="overlay">
-          <p>I love Hex-Headed Bolts for some reason</p>
+          <p>I love Socket-Head Bolts for some reason</p>
         </div>
       </div>
 

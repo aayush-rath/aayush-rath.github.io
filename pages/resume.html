@@ -129,7 +129,7 @@
       }
 
       .dark-mode-toggle {
-        position: absolute;
+        position: fixed;
         width: 50px;
         height: 50px;
         font-size: 20px;
@@ -143,6 +143,9 @@
         cursor: pointer;
         box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         transition: background-color 0.3s;
+
+        z-index: 9999;
+        pointer-events: auto;
       }
 
       body.dark-mode .dark-mode-toggle {
@@ -150,22 +153,179 @@
         color: #fff;
       }
 
-      body, .page-header, .site-footer, .button, .horizontal_line, h1, p, a {
+      .timeline {
+        position: relative;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 10px;
+      }
+
+      .timeline::after {
+        content: '';
+        position: absolute;
+        width: 6px;
+        background: #ffa726;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        margin-left: -3px;
+      }
+
+      .timeline-container {
+        padding: 20px 40px;
+        position: relative;
+        background: inherit;
+        width: 50%;
+      }
+
+      .timeline-container.left {
+        font-family: 'Josefin Slab';
+        left: 0;
+      }
+
+      .timeline-container.right {
+        font-family: 'Josefin Slab';
+        left: 50%;
+      }
+
+      .timeline-container::after {
+        content: '';
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        right: -13px;
+        background: #ffa726;
+        border: 2px solid #0e0e0e;
+        top: 15px;
+        border-radius: 20%;
+        z-index: 1;
+      }
+
+      .timeline-container.right::after {
+        left: -13px;
+      }
+
+      .content {
+        padding: 20px;
+        background: #1a1a1a;
+        position: relative;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #00000088;
+      }
+
+      .content h2 {
+        color: #fcba57;
+      }
+
+      @media screen and (max-width: 768px) {
+        .timeline::after {
+          left: 90px;
+        }
+
+        .timeline-container {
+          width: 100%;
+          padding-left: 120px;
+          padding-right: 30px;
+        }
+
+        .timeline-container.right {
+          left: 0%;
+        }
+
+        .timeline-container.left::after,
+        .timeline-container.right::after {
+          left: 60px;
+        }
+      }
+
+      body.dark-mode .timeline::after {
+        background: #ffa726;
+      }
+
+      body.dark-mode .timeline-container::after {
+        background: #ffa726;
+        border-color: #0e0e0e;
+      }
+
+      body.dark-mode .content {
+        background: #1a1a1a;
+        box-shadow: 0 0 10px #00000088;
+      }
+
+      body.dark-mode .content h2 {
+        color: #fcba57;
+      }
+
+      body:not(.dark-mode) .timeline::after {
+        background: #ff9800;
+      }
+
+      body:not(.dark-mode) .timeline-container::after {
+        background: #ff9800;
+        border-color: #cccccc;
+      }
+
+      body:not(.dark-mode) .content {
+        background: #fff9f0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      body:not(.dark-mode) .content h2 {
+        color: #ff6f00;
+      }
+
+      body, .page-header, .site-footer, .button, .horizontal_line, .content, .timeline, .timeline-container, .timeline-container.left, .timeline-container.right, h1, p, a {
         transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
       }
     </style>
   </head>
 
   <body>
+    <button id="darkModeToggle" class="dark-mode-toggle">🌙</button>
     <header class="page-header">
-      <h1>Resume</h1>
-      <button id="darkModeToggle" class="dark-mode-toggle">🌙</button>
+      <h1>Journey till now</h1>
       <a href="../index.html" class="home-button">
         <img src="../assets/images/home_button.png" alt="Home" width="40px">
       </a> 
     </header>
     
     <div class="horizontal_line"></div>
+    <div class="timeline">
+      <div class="timeline-container left">
+        <div class="content">
+          <h2>August 2024 - July 2025</h2>
+          <p>Worked as a Robotics Engineer at <b>Swaayatt Robots Pvt. Ltd.</b> developing the perception stack for autonomous driving</p>
+        </div>
+      </div>
+
+      <div class="timeline-container right">
+        <div class="content">
+          <h2>July 2024</h2>
+          <p>Graduated from IIT Madras with a Bachelors of Technology in Ocean Engineering</p>
+        </div>
+      </div>
+
+      <div class="timeline-container left">
+        <div class="content">
+          <h2>May 2023 - July 2023</h2>
+          <p>Research Internship at <b>Lab de Biomécanique et Mécanique des Chocs</b> in Lyon France under <b>Prof. Rapahel Dumas</b> working on the analyzing the gait motion of the transfermoral amputees </p>
+        </div>
+      </div>
+
+      <div class="timeline-container right">
+        <div class="content">
+          <h2>Jan 2021 - Jan 2024</h2>
+          <p>Wore multiple hats to build two formula student vehicles with one of the best group of engineers <b>Team Raftar</b> that took part in the <b>Formula Bharat 23 and 24</b> to become podium-finishers</p>
+        </div>
+      </div>
+
+      <div class="timeline-container left">
+        <div class="content">
+          <h2>November 2020</h2>
+          <p>Started college being in the covid batch not knowing how life was going to turn out to be</p>
+        </div>
+      </div>
+    </div>
 
     <footer class="site-footer">
       <hr class="footer-line">

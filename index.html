@@ -11,6 +11,7 @@
     <link href='https://fonts.googleapis.com/css?family=Josefin Slab' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Jura' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script type="importmap">
       {
         "imports": {
@@ -174,13 +175,35 @@
       }
 
       #canvas-container {
-        width: 600px;
-        height: 800px;
+        aspect-ratio: 3 / 4;
+        width: 100%;
+        max-width: 600px;
+        max-height: 100%;
         border: none;
         background-color: #fffaf4;
         flex-shrink: 0;
         margin-right: 40px;
         margin-left: 40px;
+      }
+
+      .canvas-caption {
+        font-family: 'Josefin Slab';
+        margin-top: 10px;
+        font-size: 0.85rem;
+        color: #333;
+        text-align: center;
+      }
+
+      body.dark-mode .canvas-caption{
+        color: #fffaf4;
+      }
+
+      .canvas-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 600px;
       }
 
       .about_me {
@@ -272,7 +295,7 @@
       }
 
       .dark-mode-toggle {
-        position: absolute;
+        position: fixed;
         width: 50px;
         height: 50px;
         font-size: 20px;
@@ -286,6 +309,9 @@
         cursor: pointer;
         box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         transition: background-color 0.3s;
+
+        z-index: 9999;
+        pointer-events: auto;
       }
 
       body.dark-mode .dark-mode-toggle {
@@ -307,7 +333,38 @@
         content: url('./assets/images/BatmanAtNight.png');
       }
 
-      body, .page-header, .site-footer, .button, .horizontal_line, h1, p, a {
+      .social-icons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: 100%;
+        margin: 30px 0 10px 0;
+        padding: 0 10px;
+      }
+
+      .social-icons a {
+        flex: 1;
+        text-align: center;
+        color: #000;
+        font-size: 28px;
+        transition: transform 0.2s ease, color 0.3s ease;
+      }
+
+      .social-icons a:hover {
+        transform: scale(1.2);
+        color: #ffa726;
+      }
+
+      body.dark-mode .social-icons a {
+        color: #fff;
+      }
+
+      body.dark-mode .social-icons a:hover {
+        color: #fcba57;
+      }
+
+      body, .page-header, .site-footer, .button, .horizontal_line, .social-icons, h1, p, a {
         transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
       }
     </style>
@@ -318,7 +375,7 @@
       <h1>Hello World!<br>I am Aayush Rath</h1>
       <button id="darkModeToggle" class="dark-mode-toggle">🌙</button>
       <div class="flex-container">
-        <a href="./pages/resume.html" class="button">Resume</a>
+        <a href="./pages/resume.html" class="button">Journey</a>
         <a href="./pages/projects.html" class="button">Projects</a>
         <a href="./pages/articles.html" class="button">Articles</a>
         <a href="./pages/game.html" class="button">Control</a>
@@ -326,7 +383,10 @@
     </header>
     <div class="horizontal_line"></div>
     <div class="content-section">
-      <div id="canvas-container"></div>
+      <div class="canvas-wrapper">
+        <div id="canvas-container"></div>
+        <p class="canvas-caption">The simplest non-trivial knot</p>
+      </div>
       <div class="about_me">I’m a Robotics Enthusiast driven by curiosity and caffeine.
         If it’s got anything to do with mathematics, computer science, or AI — I’m already neck-deep in it.
         Despite my love for code, I’ve never let go of my mechanical roots — CAD design and physics-based simulations are still my playgrounds.<br><br>
@@ -337,6 +397,20 @@
         Need help debugging that mysterious ROS 2 error?
         Or just want to geek out over cool tech?
         Let’s talk. 🚀<br>
+        <div class="social-icons">
+          <a href="https://github.com/aayush-rath/" target="_blank" aria-label="GitHub">
+            <i class="fab fa-github"></i>
+          </a>
+          <a href="https://in.linkedin.com/in/aayush-rath-008584201" target="_blank" aria-label="LinkedIn">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="./assets/CV__Main_.pdf" target="_blank" aria-label="Resume">
+            <i class="fas fa-file-alt"></i>
+          </a>
+          <a href="mailto:aayushrath@outlook.com" target="_blank" aria-label="Resume">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
         <img src="./assets/images/IMG_20230715_162625.jpg" alt="Me" width="300px" class="img-center">
       </div>
     </div>
