@@ -153,6 +153,66 @@
         color: #fff;
       }
 
+      .project-container {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        margin: 20px auto;
+        max-width: 900px;
+        padding: 0 20px;
+      }
+
+      .project-card {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        background-color: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        transform: scale(1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .project-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      }
+
+      .project-video {
+        flex: 1;
+        min-width: 300px;
+        max-width: 350px;
+        padding-left: 20px;
+      }
+
+      .project-video video {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .project-info {
+        flex: 2;
+        padding: 20px;
+        font-family: 'Jura', sans-serif;
+      }
+
+      .project-info h2 {
+        margin-top: 0;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.4rem;
+      }
+
+      body.dark-mode .project-card {
+        background-color: #333;
+        color: #f5f5f5;
+      }
+
+
       body, .page-header, .site-footer, .button, .horizontal_line, h1, p, a {
         transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
       }
@@ -169,6 +229,28 @@
     </header>
     
     <div class="horizontal_line"></div>
+
+    <div class="project-container">
+
+      <a href="https://github.com/aayush-rath/Nolon-simulation-stack" class="project-card" target="_blank">
+        <div class="project-video">
+          <video autoplay loop muted>
+            <source src="../assets/videos/Nolon_bot.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="project-info">
+          <h2>Nolon Simulation Stack</h2>
+          <p>
+            This is the simulation stack I built brick by brick for NOLON AI for their toilet cleaning application. It includes<br>
+            - Robot Geometry and diff drive and joint traj controllers (urdf)<br>
+            - Map generation and localization (slam_toolbox)<br>
+            - Mobile base navigation (nav2) <br>
+            - Robotic arm manipulation (moveit2)<br>
+          </p>
+        </div>
+      </a>
+
+    </div>
 
     <footer class="site-footer">
       <hr class="footer-line">
