@@ -343,6 +343,18 @@
         padding: 0 10px;
       }
 
+      .icon-with-caption {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 22px; /* icon size */
+      }
+      .icon-with-caption span {
+        font-size: 0.65rem;  /* small caption */
+        margin-top: 5px;
+        font-family: 'Montserrat', sans-serif;
+      }
+
       .social-icons a {
         flex: 1;
         text-align: center;
@@ -399,16 +411,28 @@
         Let’s talk. 🚀<br>
         <div class="social-icons">
           <a href="https://github.com/aayush-rath/" target="_blank" aria-label="GitHub">
-            <i class="fab fa-github"></i>
+            <div class="icon-with-caption">
+              <i class="fab fa-github"></i>
+              <span>GitHub</span>
+            </div>
           </a>
           <a href="https://in.linkedin.com/in/aayush-rath-008584201" target="_blank" aria-label="LinkedIn">
-            <i class="fab fa-linkedin"></i>
+            <div class="icon-with-caption">
+              <i class="fab fa-linkedin"></i>
+              <span>LinkedIn</span>
+            </div>
           </a>
           <a href="./assets/CV__Main_.pdf" target="_blank" aria-label="Resume">
-            <i class="fas fa-file-alt"></i>
+            <div class="icon-with-caption">
+              <i class="fas fa-file-alt"></i>
+              <span>Resume</span>
+            </div>
           </a>
           <a href="mailto:aayushrath@outlook.com" target="_blank" aria-label="Resume">
-            <i class="fas fa-envelope"></i>
+            <div class="icon-with-caption">
+              <i class="fas fa-envelope"></i>
+              <span>Mail</span>
+            </div>
           </a>
         </div>
         <img src="./assets/images/IMG_20230715_162625.jpg" alt="Me" width="300px" class="img-center">
