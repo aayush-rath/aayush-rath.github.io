@@ -245,11 +245,11 @@
 
       body.dark-mode .timeline-container::after {
         background: #ffa726;
-        border-color: #0e0e0e;
+        border-color: #3b3b3b;
       }
 
       body.dark-mode .content {
-        background: #1a1a1a;
+        background: #3b3b3b;
         box-shadow: 0 0 10px #00000088;
       }
 
@@ -275,6 +275,19 @@
         color: #ff6f00;
       }
 
+      .content-flex {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .timeline-img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+
       body, .page-header, .site-footer, .button, .horizontal_line, .content, .timeline, .timeline-container, .timeline-container.left, .timeline-container.right, h1, p, a {
         transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
       }
@@ -295,21 +308,32 @@
       <div class="timeline-container left">
         <div class="content">
           <h2>August 2025 - Present</h2>
-          <p>Doing a Research Internship at IIIT Hyderabad at the <b>Robotics Research Center (RRC)</b> in the field of motion planning under the guidance of <b>Prof. Antony Thomas</b></p>
+          <div class="content-flex">
+            <img src="../assets/logos/iiith_logo.png" alt="Swaayatt Logo" class="timeline-img">
+            <p><b>Research Internship (IIIT Hyderabad – Robotics Research Center, RRC)</b><br>
+              Conducting research on motion planning under the guidance of Prof. Antony Thomas, contributing to advanced algorithms for efficient and reliable robotic navigation.</p>
+          </div>
         </div>
       </div>
 
       <div class="timeline-container right">
         <div class="content">
           <h2>July 2024 - Present</h2>
-          <p>Working as a Robotics Engineer at <b>NOLON.AI</b> creating simulations and planners to clean toilets like no human can</p>
+          <div class="content-flex">
+            <img src="../assets/logos/nolon_logo.png" alt="Swaayatt Logo" class="timeline-img">
+            <p>Working as a Robotics Engineer at <b>NOLON.AI</b> creating simulations and planners to clean toilets like no human can</p>
+          </div>
         </div>
       </div>
 
       <div class="timeline-container left">
         <div class="content">
           <h2>August 2024 - July 2025</h2>
-          <p>Worked as a Robotics Engineer at <b>Swaayatt Robots Pvt. Ltd.</b> developing the perception stack for autonomous driving</p>
+          <div class="content-flex">
+            <img src="../assets/logos/swaayatt_logo.png" alt="Swaayatt Logo" class="timeline-img">
+            <p><b>Robotics Engineer (Swaayatt Robots Pvt. Ltd.)</b><br>
+              Developed and optimized the perception stack for autonomous driving, enhancing environment understanding, obstacle detection, and decision-making capabilities of self-driving systems.</p>
+          </div>
         </div>
       </div>
 
@@ -323,14 +347,20 @@
       <div class="timeline-container left">
         <div class="content">
           <h2>May 2023 - July 2023</h2>
-          <p>Research Internship at <b>Lab de Biomécanique et Mécanique des Chocs</b> in Lyon France under <b>Prof. Rapahel Dumas</b> working on the analyzing the gait motion of the transfermoral amputees </p>
+          <div class="content-flex">
+            <img src="../assets/logos/lbmc_logo.png" alt="Swaayatt Logo" class="timeline-img">
+            <p>Research Internship at <b>Lab de Biomécanique et Mécanique des Chocs</b> in Lyon France under <b>Prof. Rapahel Dumas</b> working on the analyzing the gait motion of the transfermoral amputees </p>
+          </div>
         </div>
       </div>
 
       <div class="timeline-container right">
         <div class="content">
           <h2>Jan 2021 - Jan 2024</h2>
-          <p>Wore multiple hats to build two formula student vehicles with one of the best group of engineers <b>Team Raftar</b> that took part in the <b>Formula Bharat 23 and 24</b> to become podium-finishers</p>
+          <div class="content-flex">
+            <img src="../assets/logos/rfr_logo.png" alt="Swaayatt Logo" class="timeline-img">
+            <p>Wore multiple hats to build two formula student vehicles with one of the best group of engineers <b>Team Raftar</b> that took part in the <b>Formula Bharat 23 and 24</b> to become podium-finishers</p>
+          </div>
         </div>
       </div>
 
