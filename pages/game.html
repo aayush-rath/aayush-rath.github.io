@@ -1,9 +1,18 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
   <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <meta name="author" content="Aayush Rath">
+    <meta name="description" content="A website to write my blogs and my projects">
     <title>Aayush Rath</title>
-        <script type="importmap">
+    <link rel="icon" href="../assets/images/screw-removebg-preview.png">
+    <link href='https://fonts.googleapis.com/css?family=Josefin Slab' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Jura' rel='stylesheet'>
+    <script type="importmap">
       {
         "imports": {
           "three": "https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js",
@@ -12,10 +21,292 @@
       }
     </script>
     <style>
-      body { margin: 0; }
+      * {
+          box-sizing: border-box;
+      }
+
+      html{
+          font-size: 22px;
+      }
+
+      h1 {
+          font-family: 'Montserrat';
+          margin-bottom: 70px;
+          padding-top: 30px;
+          font-weight: 100;
+      }
+
+      .horizontal_line {
+          width: 100%;
+          border-top: 1px solid black;
+          animation: growLine 1.2s ease-out forwards;
+      }
+
+      body.dark-mode .horizontal_line {
+        border-top: 1px solid white;
+      }
+
+      .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 40px 60px;
+        min-height: 250px;
+        background-color: #fffaf4;
+        background-image: radial-gradient(#999 9%, transparent 7%);
+        background-size: 20px 20px;
+        background-position: center;
+        z-index: 1;
+      }
+
+      body.dark-mode .page-header {
+        background-color: #222222;
+        background-image: radial-gradient(#aaa 6%, transparent 7%);
+      }
+
+      .site-footer {
+          text-align: center;
+          margin-top: 30px;
+          padding: 20px;
+          font-family: 'Josefin Slab', serif;
+          color: #333;
+          background-color: #fffaf4;
+      }
+
+      .footer-line {
+          border: none;
+          border-top: 1px solid #aaa;
+          margin: 40px auto 20px auto;
+          width: 80%;
+      }
+
+      body.dark-mode .site-footer{
+        background-color: #222222;
+        color: white;
+      }
+
+      .home-button {
+        position: absolute;
+        top: 15px;
+        right: 30px;
+        background-color: #fffaf4;
+        color: #222;
+        padding: 6px 12px;
+        border-radius: 6px;
+        transition: background-color 0.3s, transform 0.2s;
+        z-index: 10;
+        margin-right: 50px;
+        margin-top: 10px;
+      }
+
+      .home-button:hover {
+        box-shadow: 0 12px 16px rgba(0, 0, 0, 0.24), 0 17px 50px rgba(0, 0, 0, 0.19);;
+      }
+
+      @keyframes growLine {
+          from {
+          width: 0;
+          }
+          to {
+          width: 100%;
+          }
+      }
+
+      .article-section{
+        font-family: 'Josefin Slab';
+        font-weight: 100;
+        font-size: 30px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        margin-left: 40px;
+      }
+
+      .gallery-container {
+        column-count: 3;
+        column-gap: 20px;
+        padding: 30px;
+      }
+
+      .gallery-item {
+        break-inside: avoid;
+        margin-bottom: 20px;
+        font-family: 'Jura';
+        font-size: 80%;
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      }
+
+      .gallery-item img {
+        width: 100%;
+        display: block;
+        border-radius: 8px;
+        transition: transform 0.3s ease;
+      }
+
+      .gallery-item:hover img {
+        transform: scale(1.05);
+        cursor: pointer;
+      }
+
+      .overlay {
+        position: absolute;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        width: 100%;
+        padding: 10px;
+        transform: translateY(100%);
+        transition: transform 0.3s ease;
+      }
+
+      .gallery-item:hover .overlay {
+        transform: translateY(0%);
+      }
+
+      @media (max-width: 480px) {
+        .gallery-container {
+          column-count: 2;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .gallery-container {
+          column-count: 1;
+        }
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background-color: #fffaf4;
+      }
+
+      body.dark-mode {
+        background-color: #222222;
+        color: #f5f5f5;
+      }
+
+
+      .dark-mode-toggle {
+        position: fixed;
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        top: 15px;
+        left: 30px;
+        padding: 6px;
+        border: none;
+        border-radius: 6px;
+        background-color: #f6ddd0;
+        color: #000;
+        cursor: pointer;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        transition: background-color 0.3s;
+
+        z-index: 9999;
+        pointer-events: auto;
+      }
+
+      body.dark-mode .dark-mode-toggle {
+        background-color: #333;
+        color: #fff;
+      }
+
+      .close {
+        position: absolute;
+        top: 30px;
+        right: 50px;
+        color: white;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 1001;
+      }
+
+      .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+      }
+
+      .nav-links li a {
+        color: white;
+        text-decoration: none;
+        padding: 8px 12px;
+        transition: background-color 0.3s ease;
+      }
+
+      .nav-links li a:hover {
+        background-color: #444;
+        border-radius: 4px;
+      }
+
+      body, .page-header, .site-footer, .button, .horizontal_line, h1, p, a {
+        transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+      }
     </style>
   </head>
+
   <body>
-    <script type="module" src="/game.js"></script>
+
+    <header class="page-header">
+      <h1>Game</h1>
+      <button id="darkModeToggle" class="dark-mode-toggle">🌙</button>
+      <a href="../index.html" class="home-button">
+        <img src="../assets/images/home_button.png" alt="Home" width="40px">
+      </a>
+    </header>
+    <div class="horizontal_line"></div>
+    <p align="center">-------------------- Under Construction --------------------</p>
+
+    <script>
+      const toggleBtn = document.getElementById('darkModeToggle');
+
+      const isDarkMode = () => document.body.classList.contains('dark-mode');
+
+      function applyDarkModePreference() {
+        const enabled = localStorage.getItem('darkMode') === 'enabled';
+        if (enabled) document.body.classList.add('dark-mode');
+
+        if (enabled) {
+          toggleBtn.textContent = '🌞';
+        } else {
+          toggleBtn.textContent = '🌙';
+        }
+
+        if (window.updateThreeSceneForDarkMode)
+          updateThreeSceneForDarkMode(enabled);
+      }
+
+      document.addEventListener('sceneReady', applyDarkModePreference);
+
+      toggleBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const enabled = isDarkMode();
+        localStorage.setItem('darkMode', enabled ? 'enabled' : 'disabled');
+
+        if (enabled) {
+          toggleBtn.textContent = '🌞';
+        } else {
+          toggleBtn.textContent = '🌙';
+        }
+
+        if (window.updateThreeSceneForDarkMode)
+          updateThreeSceneForDarkMode(enabled);
+      });
+
+      applyDarkModePreference();
+    </script>
+
+    <footer class="site-footer">
+      <hr class="footer-line">
+      <p>&copy; 2025 Aayush Rath. All rights reserved.</p>
+    </footer>
   </body>
 </html>

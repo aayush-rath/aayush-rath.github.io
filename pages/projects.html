@@ -4,6 +4,7 @@
 
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.9">
     <meta name="author" content="Aayush Rath">
     <meta name="description" content="A website to write my blogs and my projects">
     <title>Aayush Rath</title>
@@ -184,7 +185,7 @@
 
       .project-video {
         flex: 1;
-        min-width: 300px;
+        min-width: 200px;
         max-width: 350px;
         padding-left: 20px;
       }
@@ -193,6 +194,24 @@
         width: 100%;
         height: auto;
         display: block;
+      }
+
+      .video-wrapper {
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%;
+        margin-bottom: 20px;
+      }
+
+      .video-wrapper video,
+      .video-wrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        object-fit: cover;
       }
 
       .project-info {
@@ -255,13 +274,15 @@
           <video autoplay loop muted style="margin-bottom: 20px;">
             <source src="../assets/videos/Raftar.mp4" type="video/mp4">
           </video>
-          <iframe width="280" height="150"
-            src="https://www.youtube.com/embed/NySlrRao4WI?autoplay=1&mute=1&playsinline=1"
-            title="YouTube video player" frameborder="0"
-            allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen>
-          </iframe>
+          <div class="video-wrapper">
+            <iframe width="280" height="150"
+              src="https://www.youtube.com/embed/NySlrRao4WI?autoplay=1&mute=1&playsinline=1"
+              title="YouTube video player" frameborder="0"
+              allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen>
+            </iframe>
+          </div>
         </div>
         <div class="project-info">
           <h2>Raftar Formula Racing</h2>
