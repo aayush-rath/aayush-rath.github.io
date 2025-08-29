@@ -171,21 +171,19 @@
         display: flex;
         justify-content: center;
         align-items: flex-start;
-        padding: 60px 50px;
+        padding: 40px 20px;   /* ↓ reduced from 60px 50px */
         flex-wrap: wrap;
-        gap: 50px;
+        gap: 40px;            /* ↓ keep spacing balanced */
       }
 
       #canvas-container {
         aspect-ratio: 3 / 4;
         width: 100%;
-        max-width: 600px;
-        max-height: 100%;
+        max-width: 800px;
         border: none;
         background-color: #fffaf4;
         flex-shrink: 0;
-        margin-right: 40px;
-        margin-left: 40px;
+        margin: 0 auto; 
       }
 
       .canvas-caption {
@@ -205,7 +203,7 @@
         flex-direction: column;
         align-items: center;
         width: 100%;
-        max-width: 600px;
+        max-width: 800px;
       }
 
       .about_me {
@@ -401,16 +399,20 @@
         <div id="canvas-container"></div>
         <p class="canvas-caption">The simplest non-trivial knot</p>
       </div>
-      <div class="about_me">I’m a Robotics Enthusiast driven by curiosity and caffeine.
-        If it’s got anything to do with mathematics, computer science, or AI — I’m already neck-deep in it.
-        Despite my love for code, I’ve never let go of my mechanical roots — CAD design and physics-based simulations are still my playgrounds.<br><br>
+        <div class="about_me">
+          I’m a Robotics Enthusiast driven by curiosity and caffeine.  
+          If it’s got anything to do with mathematics, computer science, or AI — I’m already neck-deep in it.  
+          Despite my love for code, I’ve never let go of my mechanical roots — CAD design and physics-based simulations are still my playgrounds.<br><br>
 
-        I did my Bachelors of Technology from IIT Madras in Naval Architecture & Ocean Engineering, now on a mission to become a modern-day polymath in this chaotic Kal Yug.<br><br>
+          I completed my Bachelors of Technology from IIT Madras in Naval Architecture & Ocean Engineering, where I built a strong foundation in mechanics and systems design.<br><br>  
+          Currently, I am pursuing a research internship at the <b>Robotics Research Center, IIIT Hyderabad</b>, where I work on cutting-edge problems in autonomous systems and robotics.  
+          This experience is giving me the chance to bridge theoretical foundations with real-world robotics challenges, from planning and perception to control and simulation.<br><br>
 
-        Got an idea you’re itching to build?
-        Need help debugging that mysterious ROS 2 error?
-        Or just want to geek out over cool tech?
-        Let’s talk. 🚀<br>
+          My mission is to become a modern-day polymath in this chaotic Kal Yug — combining engineering, science, and creativity to solve complex problems.  
+          Got an idea you’re itching to build?  
+          Need help debugging that mysterious ROS 2 error?  
+          Or just want to geek out over cool tech?  
+          Let’s talk. 🚀<br>
         <div class="social-icons">
           <a href="https://github.com/aayush-rath/" target="_blank" aria-label="GitHub">
             <div class="icon-with-caption">

@@ -164,10 +164,11 @@
       }
 
       .project-card {
+        position: relative;
         display: flex;
-        align-items: center;
-        gap: 20px;
-        background-color: #fff;
+        flex-direction: column;
+        justify-content: flex-end;
+        background-color: #000;
         border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
@@ -176,24 +177,32 @@
         cursor: pointer;
         text-decoration: none;
         color: inherit;
+        min-height: 300px;
+      }
+
+      .project-card video,
+      .project-card iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+      }
+
+      .project-info {
+        position: relative;
+        z-index: 1;
+        background: rgba(0, 0, 0, 0.55);
+        color: #fff;
+        padding: 20px;
+        width: 100%;
       }
 
       .project-card:hover {
         transform: scale(1.03);
         box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-      }
-
-      .project-video {
-        flex: 1;
-        min-width: 200px;
-        max-width: 350px;
-        padding-left: 20px;
-      }
-
-      .project-video video {
-        width: 100%;
-        height: auto;
-        display: block;
       }
 
       .video-wrapper {
@@ -240,7 +249,7 @@
 
   <body>
     <header class="page-header">
-      <h1>Projects</h1>
+      <h1>Projects & Publications</h1>
       <button id="darkModeToggle" class="dark-mode-toggle">🌙</button>
       <a href="../index.html" class="home-button">
         <img src="../assets/images/home_button.png" alt="Home" width="40px">
@@ -252,11 +261,9 @@
     <div class="project-container">
 
       <a href="https://github.com/aayush-rath/Nolon-simulation-stack" class="project-card" target="_blank">
-        <div class="project-video">
-          <video autoplay loop muted>
-            <source src="../assets/videos/Nolon_bot.mp4" type="video/mp4">
-          </video>
-        </div>
+        <video autoplay loop muted playsinline>
+          <source src="../assets/videos/Nolon_bot.mp4" type="video/mp4">
+        </video>
         <div class="project-info">
           <h2>Nolon Simulation Stack</h2>
           <p>
@@ -269,34 +276,23 @@
         </div>
       </a>
 
-      <a href="https://www.linkedin.com/company/rfriitm/posts/?feedView=all" class="project-card" target="_blank">
-        <div class="project-video">
-          <video autoplay loop muted style="margin-bottom: 20px;">
-            <source src="../assets/videos/Raftar.mp4" type="video/mp4">
+        <a href="https://www.linkedin.com/company/rfriitm/posts/?feedView=all" class="project-card" target="_blank">
+          <video autoplay loop muted playsinline>
+            <source src="../assets/videos/Raftar1.mp4" type="video/mp4">
           </video>
-          <div class="video-wrapper">
-            <iframe width="280" height="150"
-              src="https://www.youtube.com/embed/NySlrRao4WI?autoplay=1&mute=1&playsinline=1"
-              title="YouTube video player" frameborder="0"
-              allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allowfullscreen>
-            </iframe>
-          </div>
-        </div>
         <div class="project-info">
           <h2>Raftar Formula Racing</h2>
           <p>
-            As part of <b>Raftar Formula Racing</b>, I worked extensively on the <b>chassis</b> and <b>aerodynamic package</b> of our electric
-            Formula Student car. My responsibilities spanned CAD design, structural and aerodynamic simulations, and hands-on manufacturing. I
-            contributed to innovative solutions such as a <b>powered diffuser with fan-assisted downforce</b> and a <b>dynamic drag reduction
-            system (DRS)</b>, both validated through CFD and track data, resulting in measurable lap-time and stability improvements.
+            As the <b>Chassis Lead</b>, I oversaw subsystem integration, guided junior engineers, and ensured design-to-manufacturing consistency
+            across the team. Our combined efforts led to <b>multiple podium finishes at Formula Bharat</b>, including 2nd place overall in 2024 and
+            awards in <b>Engineering Design</b> and <b>Battery Design</b>.
           </p>
 
           <p>
-            Later, as <b>Chassis Lead</b>, I oversaw subsystem integration, guided junior engineers, and ensured design-to-manufacturing consistency
-            across the team. Our combined efforts led to <b>multiple podium finishes at Formula Bharat</b>, including 2nd place overall in 2024 and
-            awards in <b>Engineering Design</b> and <b>Battery Design</b>.
+            I worked extensively on the <b>chassis</b> and <b>aerodynamic package</b> of our electric
+            Formula Student car. My responsibilities spanned CAD design, structural and aerodynamic simulations, and hands-on manufacturing. I
+            contributed to innovative solutions such as a <b>powered diffuser with fan-assisted downforce</b> and a <b>dynamic drag reduction
+            system (DRS)</b>, both validated through CFD and track data, resulting in measurable lap-time and stability improvements.
           </p>
         </div>
       </a>
