@@ -16,6 +16,7 @@
       gtag('config', 'G-BX8JFPKXJ4');
     </script>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
     <meta name="author" content="Aayush Rath">
     <meta name="description" content="A website to write my blogs and my projects">
     <title>Aayush Rath</title>
