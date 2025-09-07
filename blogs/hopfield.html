@@ -36,6 +36,7 @@
 
       html{
           font-size: 22px;
+          scroll-behavior: smooth;
       }
 
 
@@ -52,7 +53,7 @@
         padding-left: 5%;
         margin-top: 30px;
         font-family: 'Montserrat', sans-serif;
-    }
+      }
 
       .horizontal_line {
           width: 100%;
@@ -161,12 +162,116 @@
         font-size: 18px;
         border-radius: 12px;
         transition: background-color 0.4s, color 0.4s;
-    }
+      }
 
-    body.dark-mode .blog-container {
-        background-color: #222222;
-        color: #eaeaea;
-    }
+      .blog-container h2 {
+        padding-left: 0;
+      }
+
+      body.dark-mode .blog-container {
+          background-color: #222222;
+          color: #eaeaea;
+      }
+
+      .blog-image {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .blog-image img {
+        max-width: 700px;
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+      }
+
+      .reference-list {
+        list-style: decimal;
+        margin: 20px 0;
+        padding-left: 20px;
+        font-size: 15px;
+        line-height: 1.6;
+      }
+
+      .reference-list li {
+        margin-bottom: 12px;
+      }
+
+      .reference-list a {
+        color: #0066cc;
+        text-decoration: none;
+      }
+
+      .reference-list a:hover {
+        text-decoration: underline;
+      }
+
+      nav.sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 220px;
+        background-color: #f6ddd0;
+        padding-top: 80px;
+        font-family: 'Montserrat', sans-serif;
+        transition: transform 0.3s ease;
+        overflow-y: auto;
+        z-index: 1000;
+        transform: translateX(-220px);
+      }
+
+      nav.sidebar a {
+        display: block;
+        padding: 12px 20px;
+        color: #222;
+        text-decoration: none;
+        transition: background 0.2s;
+      }
+
+      nav.sidebar a:hover {
+        background-color: #ddd;
+      }
+
+      body.dark-mode nav.sidebar {
+        background-color: #333;
+      }
+
+      body.dark-mode nav.sidebar a {
+        color: #f5f5f5;
+      }
+
+      nav.sidebar.open {
+        transform: translateX(0);
+      }
+
+
+      .sidebar-toggle {
+        position: fixed;
+        top: 15px;
+        left: 80px;
+        background-color: #f6ddd0;
+        color: #222;
+        border: none;
+        border-radius: 6px;
+        font-size: 24px;
+        padding: 8px 12px;
+        cursor: pointer;
+        z-index: 1100;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        transition: background-color 0.3s;
+      }
+
+      .sidebar-toggle:hover {
+        background-color: #e0c9bc;
+      }
+
+      body.dark-mode .sidebar-toggle {
+        background-color: #333;
+        color: #fff;
+      }
+
 
       body, .page-header, .site-footer, .button, .horizontal_line,.blog-container, h1, p, a {
         transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
@@ -178,9 +283,9 @@
         gap: 25px;
         justify-content: center;
         margin: 30px 0;
-        }
+      }
 
-        .spin-cell {
+      .spin-cell {
         width: 50px;
         height: 50px;
         font-size: 20px;
@@ -193,62 +298,177 @@
         transition: background-color 0.3s, transform 0.2s;
         background-color: #f0f0f0;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        }
+      }
 
-        .spin-cell:hover {
+      .spin-cell:hover {
         background-color: #e0e0e0;
         transform: scale(1.1);
-        }
+      }
 
-        .spin-cell.up {
+      .spin-cell.up {
         background-color: #cce5ff;
         color: #0056b3;
-        }
+      }
 
-        .spin-cell.down {
+      .spin-cell.down {
         background-color: #f8d7da;
         color: #721c24;
-        }
+      }
+
+      .timeline {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0;
+      }
+
+      .timeline li {
+        display: grid;
+        grid-template-columns: 100px auto; /* left column for year, right for text */
+        align-items: start;
+        margin-bottom: 12px;
+      }
+
+      .timeline .year {
+        font-weight: bold;
+        color: #444;
+      }
+
+      .timeline .event {
+        margin-left: 10px;
+        line-height: 1.5;
+      }
+
+      body.dark-mode .timeline .year {
+        color: #fafbfc;
+      }
+
 
     </style>
   </head>
 
   <body>
+    <nav class="sidebar" id="sidebar">
+      <a href="#intro" aria-current="page">Introduction</a>
+      <a href="#history">History</a>
+      <a href="#demo">Interactive Demo</a>
+      <a href="#comments">Comments</a>
+    </nav>
     <button id="darkModeToggle" class="dark-mode-toggle">🌙</button>
+    <button class="sidebar-toggle" id="sidebarToggle">☰</button>
     <a href="../index.html" class="home-button">
         <img src="../assets/images/home_button.png" alt="Home" width="40px">
     </a> 
     <h1>Hopfield Networks</h1>
     <div class="horizontal_line"></div>
-    <div class="blog-container">
-        Working in robotics has led me to explore many aspects of AI, as this era is all about
-        giving AI physical bodies to interact with, learn from, and perform tasks in the real world.
-        I never studied or learned machine learning in a structured way, but the way I came across it and started
-        reading about AI has definitely been a fun journey.<br><br>
-        I have always been curious about how the ideas behind such complex architectures and learning algorithms
-        originated, which brought me to Associative Memory Networks (commonly known as Hopfield Networks).<br><br>
-        The Ising mode
-        Click on any spin to flip it. The total energy updates in real-time based on the Ising model Hamiltonian.
-    </div>
+    <section id="intro">
+      <div class="blog-container">
+        <h2><b>Introduction</b></h2>
+        Working in robotics naturally pulled me into the world of AI—because in today’s era, intelligence isn’t just about code, 
+        it’s about giving machines a body to interact, learn, and act in the real world. I never followed a strict, textbook path 
+        to learn machine learning; instead, I stumbled into it, explored out of curiosity, and discovered how exciting the journey could be.<br><br>
 
-    <div id="spin-grid"></div>
-    <div class="blog-container">Total Energy: <span id="energy-display">0</span></div>
-    <h2>Comments</h2>
-    <script src="https://giscus.app/client.js"
-        data-repo="aayush-rath/aayush-rath.github.io"
-        data-repo-id="R_kgDOPGW6yA"
-        data-category="Announcements"
-        data-category-id="DIC_kwDOPGW6yM4CtOsv"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="preferred_color_scheme"
-        data-lang="en"
-        crossorigin="anonymous"
-        async>
-    </script>
+        What fascinates me most is not just how AI works today, but how these ideas first took shape—the roots of the complex architectures 
+        and learning algorithms we rely on. That curiosity eventually led me to dive into Associative Memory Models, better known as Hopfield 
+        Networks—a concept that bridges neuroscience, physics, and AI in a way that feels both timeless and futuristic.<br><br>
+
+        One fascinating detail worth mentioning is that J.J. Hopfield was jointly awarded the 2024 Nobel Prize in Physics alongside Geoffrey E. Hinton,
+        recognized for their “foundational discoveries and inventions that enable machine learning with artificial neural networks.”<br><br>
+
+        The ideas I’m exploring here stand on the shoulders of that legacy. They are not just the work of a single mind but the result of decades of 
+        collective effort—researchers, physicists, neuroscientists, and computer scientists—each contributing to our understanding of how the brain 
+        works and how we can model intelligence artificially. Without their breakthroughs, the journey from studying neurons to building artificial
+        intelligence would not have been possible.
+        <div class="blog-image">
+          <img src="../assets/blog-images/Hopfield_Networks/Rene_&_bot.png" alt="Rene and Bot">
+        </div>
+      </div>
+    </section>
+
+    <section id="history">
+      <div class="blog-container">
+        <h2><b>History</b></h2>
+        <p>Here’s a quick journey through the key milestones—the discoveries and breakthroughs that paved the way for the creation of Hopfield Networks and beyond.</p>
+
+        <ul class="timeline">
+          <li>
+            <span class="year">1920</span>
+            <span class="event">The <b>Ising Model</b> is introduced to represent the state of magnetic materials using spins.</span>
+          </li>
+          <li>
+            <span class="year">1963</span>
+            <span class="event"><b>Roy Glauber</b> extends the Ising Model by introducing <i>Glauber dynamics</i>, allowing it to adapt and evolve over time.</span>
+          </li>
+          <li>
+            <span class="year">1971–72</span>
+            <span class="event"><b>Kaoru & Shun'ich</b> propose modifying the weights of the <i>Ising Model</i> using <i>Hebbian Learning</i>, a model for associative memory.</span>
+          </li>
+          <li>
+            <span class="year">1975</span>
+            <span class="event">The <b>Sherrington–Kirkpatrick model</b> is introduced, a mean-field model for spin glasses characterized by disordered and competing interactions between spins.</span>
+          </li>
+          <li>
+            <span class="year">1982</span>
+            <span class="event">Hopfield applied the SK-model idea with <i>binary activation function</i> to study <b>Hopfield Networks</b></span>
+          </li>
+          <li>
+            <span class="year">1984</span>
+            <span class="event">The concept of Hopfield Networks was extended to <i>continuous activation functions</i> (this is what gave rise to the modern neural networks) </span>
+          </li>
+          <li>
+            <span class="year">1985</span>
+            <span class="event"><b>Hopfield and Tank</b> presented an application of Hopfield Neural Networks to solve the popular <i>Travelling Salesman Problem</i> </span>
+          </li>
+        </ul>
+
+        <div class="blog-image">
+          <img src="../assets/blog-images/Hopfield_Networks/Angry_asimov.png" alt="Rene and Bot">
+        </div>
+      </div>
+    </section>
+
+
+    <section id="demo" style="min-height: 100vh;">
+      <div class="blog-container">
+        <h2><b>Interactive Demo</b></h2>
+         The Ising mode
+        Click on any spin to flip it. The total energy updates in real-time based on the Ising model Hamiltonian.
+      </div>
+      <div id="spin-grid"></div>
+      <div class="blog-container">Total Energy: <span id="energy-display">0</span></div>
+    </section>
+
+    <section id="references">
+      <div class="blog-container">
+        <h2><b>References</b></h2>
+        <ol class="reference-list">
+          <li>
+            Hopfield, J. J. (1982). <i>Neural networks and physical systems with emergent collective 
+            computational abilities.</i> Proceedings of the National Academy of Sciences, 79(8), 2554–2558. 
+            <a href="https://doi.org/10.1073/pnas.79.8.2554" target="_blank">https://doi.org/10.1073/pnas.79.8.2554</a>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+
+    <section id="comments">
+      <h2>Comments</h2>
+      <script src="https://giscus.app/client.js"
+          data-repo="aayush-rath/aayush-rath.github.io"
+          data-repo-id="R_kgDOPGW6yA"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOPGW6yM4CtOsv"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="en"
+          crossorigin="anonymous"
+          async>
+      </script>
+    </section>
 
     <footer class="site-footer">
       <hr class="footer-line">
@@ -297,6 +517,23 @@
         
         document.addEventListener('sceneReady', applyDarkModePreference);
         applyDarkModePreference();
+
+        const sidebar = document.getElementById("sidebar");
+        const sidebarToggle = document.getElementById("sidebarToggle");
+
+        sidebarToggle.addEventListener("click", () => {
+          sidebar.classList.toggle("open");
+        });
+
+        document.querySelectorAll('.sidebar a').forEach(anchor => {
+          anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+              behavior: 'smooth'
+            });
+            sidebar.classList.remove("open");
+          });
+        });
     </script>      
     <script>
         const N = 6;
