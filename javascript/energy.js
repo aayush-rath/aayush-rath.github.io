@@ -9,7 +9,7 @@ export function initEnergyPlot() {
   scene.background = new THREE.Color(0xfffaf4);
 
   camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
-  camera.position.set(6, 6, 6);
+  camera.position.set(4, 4, 6);
 
   const canvas = document.getElementById('energy-plot');
   if (!canvas) {

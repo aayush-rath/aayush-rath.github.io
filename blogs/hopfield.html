@@ -155,8 +155,8 @@
 
       .blog-container {
         max-width: 70%;
-        margin: 100px auto 40px auto;
-        padding: 30px;
+        margin: 50px auto 40px auto;
+        padding: 10px;
         background-color: #fffaf4;
         color: #222222;
         font-family: 'Georgia', 'Times New Roman', serif;
@@ -344,6 +344,24 @@
         color: #fafbfc;
       }
 
+      #energy-plot {
+        aspect-ratio: 2;
+        width: 100%;
+        max-width: 800px;
+        border: none;
+        background-color: #fffaf4;
+        flex-shrink: 0;
+        margin: 0 auto; 
+      }
+
+      @media (max-width: 1000px) {
+        #energy-plot {
+          width: 100%;
+          max-width: 80%;
+          max-height: fit-content;
+          height: auto;
+        }
+      }  
 
     </style>
   </head>
@@ -517,7 +535,7 @@
 
         <div align="center">
           <script type="module" src="../javascript/energy.js"></script>
-          <canvas id="energy-plot" width="300" height="225"></canvas>
+          <canvas id="energy-plot"></canvas>
         </div>
       </div>
     </section>
