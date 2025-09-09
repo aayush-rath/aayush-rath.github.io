@@ -12,6 +12,8 @@
 
       gtag('config', 'G-BX8JFPKXJ4');
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.8">
     <meta name="author" content="Aayush Rath">
@@ -250,7 +252,7 @@
       .sidebar-toggle {
         position: fixed;
         top: 15px;
-        left: 80px;
+        left: 120px;
         background-color: #f6ddd0;
         color: #222;
         border: none;
@@ -323,7 +325,7 @@
 
       .timeline li {
         display: grid;
-        grid-template-columns: 100px auto; /* left column for year, right for text */
+        grid-template-columns: 100px auto;
         align-items: start;
         margin-bottom: 12px;
       }
@@ -348,9 +350,11 @@
 
   <body>
     <nav class="sidebar" id="sidebar">
-      <a href="#intro" aria-current="page">Introduction</a>
+      <a href="#intro">Introduction</a>
+      <a href="#etym">Pseudo-Etymology</a>
       <a href="#history">History</a>
-      <a href="#demo">Interactive Demo</a>
+      <a href="#ising">The Ising Model</a>
+      <a href="#references">References</a>
       <a href="#comments">Comments</a>
     </nav>
     <button id="darkModeToggle" class="dark-mode-toggle">🌙</button>
@@ -377,10 +381,49 @@
         The ideas I’m exploring here stand on the shoulders of that legacy. They are not just the work of a single mind but the result of decades of 
         collective effort—researchers, physicists, neuroscientists, and computer scientists—each contributing to our understanding of how the brain 
         works and how we can model intelligence artificially. Without their breakthroughs, the journey from studying neurons to building artificial
-        intelligence would not have been possible.
+        intelligence would not have been possible.<br><br>
+
+        To put it simply, a Hopfield Network can be thought of as a network of binary units (like little switches that are either on or off) 
+        connected by weighted links. These weights are carefully set so that the network “remembers” certain stable patterns—like snapshots 
+        of information stored in its memory.<br><br>
+
+        Once trained, the network can reconstruct an entire memory from just a small fragment of it. This mirrors how our own brains work: 
+        for example, catching just a faint smell of a dish might instantly bring back the memory of a specific food or even the moment you
+        last had it. In this way, Hopfield Networks don’t just store data—they recreate the feeling of memory recall itself.
         <div class="blog-image">
           <img src="../assets/blog-images/Hopfield_Networks/Rene_&_bot.png" alt="Rene and Bot">
         </div>
+      </div>
+    </section>
+
+    <section id=etym>
+      <div class="blog-container">
+        <h2><b>Pseudo-Etymology</b></h2>
+        The Hopfield network in itself is described as a <i>delocalized content-addressable memory or categorizer using extensive asynchronous parallel computing</i>
+        <ul>
+          <li>
+            <b>Delocalized</b>: The stable states (the memories) are not stored in one single spot but are spread 
+            across the entire network. This means that even if part of the network is disturbed, the memory can still 
+            be retrieved — much like how human memory isn’t locked in a single neuron.
+          </li>
+          <li>
+            <b>Content-addressable</b>:Providing just a piece or a noisy version of the memory is enough to retrieve the whole thing — similar 
+            to recognizing a song from just a few notes.
+          </li>
+          <li>
+            <b>Categorizer</b>: The network is able to distinguish between different stored memories, effectively 
+            classifying the inputs into the right “mental folder.”
+          </li>
+          <li>
+            <b>Extensive</b>: The capacity of the network grows with its size — the more neurons you have, the more 
+            information it can store and retrieve. It scales with the system’s resources.
+          </li>
+          <li>
+            <b>Asynchronous</b>: Neurons don’t all update at the same time. Instead, they take turns updating 
+            independently, which makes the system more stable and avoids chaotic behavior. 
+            This also mirrors how biological brains often work — not everything fires at once.
+          </li>
+        </ul>
       </div>
     </section>
 
@@ -395,12 +438,20 @@
             <span class="event">The <b>Ising Model</b> is introduced to represent the state of magnetic materials using spins.</span>
           </li>
           <li>
+            <span class="year">1943</span>
+            <span class="event"><b>McCulloch Pitts neuron</b> came to help us build neural networks</span>
+          </li>
+          <li>
+            <span class="year">1957</span>
+            <span class="event"><b>Ronsenblatt</b> gives world the idea of perceptron and simulates it on an <i>IBM 704</i></span>
+          </li>
+          <li>
             <span class="year">1963</span>
             <span class="event"><b>Roy Glauber</b> extends the Ising Model by introducing <i>Glauber dynamics</i>, allowing it to adapt and evolve over time.</span>
           </li>
           <li>
             <span class="year">1971–72</span>
-            <span class="event"><b>Kaoru & Shun'ich</b> propose modifying the weights of the <i>Ising Model</i> using <i>Hebbian Learning</i>, a model for associative memory.</span>
+            <span class="event"><b>Amari and Nakano</b>(separately) propose modifying the weights of the <i>Ising Model</i> using <i>Hebbian Learning</i>, a model for associative memory.</span>
           </li>
           <li>
             <span class="year">1975</span>
@@ -427,14 +478,79 @@
     </section>
 
 
-    <section id="demo" style="min-height: 100vh;">
+    <section id="ising" style="min-height: 100vh;">
       <div class="blog-container">
-        <h2><b>Interactive Demo</b></h2>
-         The Ising mode
-        Click on any spin to flip it. The total energy updates in real-time based on the Ising model Hamiltonian.
+        <h2><b>Ising Model</b></h2>
+        Just like some of today’s popular machine learning models—such as diffusion models and physics-informed neural networks 
+        (PINNs)—Hopfield Networks are also grounded in physics. The goal was to create a general content-addressable memory, and in 
+        his original paper, Hopfield pointed out that any physical system that naturally settles into stable configurations can serve as 
+        a model.<br><br>
+
+        One of the key inspirations was the Ising Model, introduced to describe magnetism in ferromagnetic materials. In this model, every 
+        unit of the material carries a tiny “spin” (either +1 or –1). The overall energy of the system depends on how these spins are 
+        arranged. When placed in a magnetic field, the spins tend to align in ways that lower the energy—pushing the system toward stability. <br><br>
+        
+        This is more than just theory—you can experiment with it! Below, try clicking on the spins in the interactive setup to see how 
+        the system’s energy shifts. Notice how each dipole (spin) only “talks” to its neighbors, yet together they form a collective behavior. 
+        That same principle of local interactions leading to global order is what Hopfield leveraged to design his networks. <br><br>
       </div>
       <div id="spin-grid"></div>
-      <div class="blog-container">Total Energy: <span id="energy-display">0</span></div>
+      <div class="blog-container">
+        Total Energy: <span id="energy-display">0</span><br><br>
+        The Ising model defines energy (without any external magnetic field) as:
+        <div>
+          $$ E = -\sum_{\langle i, j \rangle}J_{i, j}\sigma_{i}\sigma_{j} $$
+        </div>
+        <ul>
+          <li>\( J_{i, j} \) is the interaction between the dipoles</li>
+          <li>\( \sigma_{i} \) is the spin value (either 1 or -1)</li>
+        </ul>
+        The central idea behind Hopfield Networks is the concept of energy minimization. A memory is introduced as input, and 
+        the network adjusts its interaction parameters so that the overall energy of the system is reduced. Stable states, which 
+        represent stored memories, correspond to these minimum-energy configurations.<br><br>
+
+        This principle effectively serves as the loss function for the network. Structurally, Hopfield Networks borrow from the 
+        Ising Model: a graph of interconnected binary units (0 or 1), where the state of each unit influences its neighbors. Through these 
+        interactions, the network converges toward a stable pattern that encodes the memory.<br><br>
+
+        Shown below is a 3D plot of an energy function, where the minima correspond to memory configurations.
+
+        <div align="center">
+          <script type="module" src="../javascript/energy.js"></script>
+          <canvas id="energy-plot" width="300" height="225"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section id="learn">
+      <div class="blog-container">
+        <h2><b>Learning</b></h2>
+        Now that we have defined an energy-based loss function, we need a method to optimize the network parameters so that the system can learn effectively. 
+        Several approaches exist, but here we focus on one of the most widely recognized methods.  
+        It is important to note that Hopfield Networks employ <b>symmetric weights</b> 
+        (the weight from neuron <i>i</i> to <i>j</i> is the same as from <i>j</i> to <i>i</i>) to guarantee the convergence of energy values.
+        
+        <h3>Hebbian Learning</h3>
+        <p>
+        Donald Hebb introduced the <b>Hebbian theory</b>, which describes how the simultaneous activation of two neurons strengthens the synaptic connection between them.  
+        This is often summarized as: <i>“neurons that fire together, wire together.”</i>  
+        In the context of Hopfield Networks, this principle is used to update the weights of the network.  
+        The weight for each connection is calculated as:
+        </p>
+        
+        <div>
+          $$ w_{i,j} = \frac{1}{n} \sum_{\mu=1}^{n} \epsilon_{i}^{\mu} \, \epsilon_{j}^{\mu} $$
+        </div>
+        <ul>
+          <li>\( w_{i,j} \) is the weight of the connection between neuron <i>i</i> and neuron <i>j</i></li>
+          <li>\( n \) is the total number of stored patterns</li>
+          <li>\( \mu \) is the index of a specific memory pattern</li>
+          <li><b>ε<sub>i</sub><sup>μ</sup></b>: the state of neuron <i>i</i> in memory pattern <i>μ</i></li>
+          <li><b>ε<sub>j</sub><sup>μ</sup></b>: the state of neuron <i>j</i> in memory pattern <i>μ</i></li>
+        </ul>
+        
+
+      </div>
     </section>
 
     <section id="references">
@@ -446,6 +562,47 @@
             computational abilities.</i> Proceedings of the National Academy of Sciences, 79(8), 2554–2558. 
             <a href="https://doi.org/10.1073/pnas.79.8.2554" target="_blank">https://doi.org/10.1073/pnas.79.8.2554</a>
           </li>
+
+          <li>
+            McCulloch, W. S., & Pitts, W. (1943). <i>A logical calculus of the ideas immanent in nervous activity.</i> 
+            The Bulletin of Mathematical Biophysics, 5(4), 115–133. 
+            <a href="https://doi.org/10.1007/BF02478259" target="_blank">https://doi.org/10.1007/BF02478259</a>
+          </li>
+        
+          <li>
+            Bruck, J. (1990). <i>On the convergence properties of the Hopfield model.</i> 
+            Proceeings of the IEEE, 78(10), 1579–1585. 
+            <a href="https://doi.org/10.1109/5.58341" target="_blank">https://doi.org/10.1109/5.58341</a>
+          </li>
+        
+          <li>
+            Storkey, A. (1997). <i>Increasing the capacity of a Hopfield network without sacrificing functionality.</i> 
+            In W. Gerstner, A. Germond, M. Hasler, & J.-D. Nicoud (Eds.), 
+            <i>Artificial Neural Networks — ICANN’97</i> (Lecture Notes in Computer Science, vol 1327, pp. 451–456). 
+            Springer, Berlin, Heidelberg. 
+            <a href="https://doi.org/10.1007/BFb0020196" target="_blank">https://doi.org/10.1007/BFb0020196</a>
+          </li>
+        
+          <li>
+            Uykan, Z. (2020). <i>On the working principle of the Hopfield Neural Networks and its equivalence to the GADIA in optimization.</i> 
+            IEEE Transactions on Neural Networks and Learning Systems, 31(9), 3294–3304. 
+            <a href="https://doi.org/10.1109/TNNLS.2019.2940920" target="_blank">https://doi.org/10.1109/TNNLS.2019.2940920</a>
+          </li>
+        
+          <li>
+            Hopfield, J. J., & Tank, D. W. (1985). <i>Computing with neural circuits: A model.</i> 
+            Science, 233(4764), 625–633. 
+            <a href="https://doi.org/10.1126/science.3755256" target="_blank">https://doi.org/10.1126/science.3755256</a>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="links">
+      <div class="blog-container">
+        <h2><b>Other links</b></h2>
+        <ol class="reference-list">
+
         </ol>
       </div>
     </section>
