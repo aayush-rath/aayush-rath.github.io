@@ -348,20 +348,20 @@
         aspect-ratio: 2;
         width: 100%;
         max-width: 800px;
+        height: auto;
         border: none;
         background-color: #fffaf4;
-        flex-shrink: 0;
-        margin: 0 auto; 
+        margin: 0 auto;
+        display: block;
       }
 
-      @media (max-width: 1000px) {
+      @media (max-width: 768px) {
         #energy-plot {
-          width: 100%;
-          max-width: 80%;
-          max-height: fit-content;
-          height: auto;
+          max-width: 100%;
+          aspect-ratio: auto;
         }
-      }  
+      }
+  
 
     </style>
   </head>
@@ -563,9 +563,12 @@
           <li>\( w_{i,j} \) is the weight of the connection between neuron <i>i</i> and neuron <i>j</i></li>
           <li>\( n \) is the total number of stored patterns</li>
           <li>\( \mu \) is the index of a specific memory pattern</li>
-          <li><b>ε<sub>i</sub><sup>μ</sup></b>: the state of neuron <i>i</i> in memory pattern <i>μ</i></li>
-          <li><b>ε<sub>j</sub><sup>μ</sup></b>: the state of neuron <i>j</i> in memory pattern <i>μ</i></li>
+          <li>\( \epsilon_{i}^{\mu} \) is the state of neuron <i>i</i> in memory pattern <i>μ</i></li>
+          <li>\( \epsilon_{i}^{\mu} \) is the state of neuron <i>j</i> in memory pattern <i>μ</i></li>
         </ul>
+
+        Assuming for only two neuron model, as you can see in the formula if the two states are the same (either (1, 1) or (-1, -1)) the 
+        weight value is positive otherwise if they are different ((1, -1) or (-1, 1))
         
 
       </div>
