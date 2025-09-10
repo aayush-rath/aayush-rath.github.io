@@ -361,6 +361,33 @@
           aspect-ratio: auto;
         }
       }
+
+      pre {
+        background-color: #f5f5f5;   /* light background */
+        color: #333;                 /* dark text */
+        padding: 16px;
+        border-radius: 8px;
+        overflow-x: auto;
+        font-family: "Fira Code", "Courier New", monospace;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .keyword { color: #0000cc; font-weight: bold; }
+      .type { color: #008080; }
+      .string { color: #a31515; }
+      .number { color: #098658; }
+      .comment { color: #008000; font-style: italic; }
+
+      body.dark-mode pre {
+        background-color: #1e1e1e;
+        color: #dcdcdc;
+      }
+      body.dark-mode .keyword { color: #569cd6; }
+      body.dark-mode .type { color: #4ec9b0; }
+      body.dark-mode .string { color: #d69d85; }
+      body.dark-mode .number { color: #b5cea8; }
+      body.dark-mode .comment { color: #6a9955; font-style: italic; }
   
 
     </style>
@@ -372,6 +399,8 @@
       <a href="#etym">Pseudo-Etymology</a>
       <a href="#history">History</a>
       <a href="#ising">The Ising Model</a>
+      <a href="#learn">Learning</a>
+      <a href="#implementation">Implementation</a>
       <a href="#references">References</a>
       <a href="#comments">Comments</a>
     </nav>
@@ -382,7 +411,7 @@
     </a> 
     <h1>Hopfield Networks</h1>
     <div class="horizontal_line"></div>
-    <section id="intro">
+    <section id="intro" style="min-height: 100vh;">
       <div class="blog-container">
         <h2><b>Introduction</b></h2>
         Working in robotics naturally pulled me into the world of AI—because in today’s era, intelligence isn’t just about code, 
@@ -414,7 +443,7 @@
       </div>
     </section>
 
-    <section id=etym>
+    <section id=etym style="min-height: 100vh;">
       <div class="blog-container">
         <h2><b>Pseudo-Etymology</b></h2>
         The Hopfield network in itself is described as a <i>delocalized content-addressable memory or categorizer using extensive asynchronous parallel computing</i>
@@ -445,7 +474,7 @@
       </div>
     </section>
 
-    <section id="history">
+    <section id="history" style="min-height: 100vh;">
       <div class="blog-container">
         <h2><b>History</b></h2>
         <p>Here’s a quick journey through the key milestones—the discoveries and breakthroughs that paved the way for the creation of Hopfield Networks and beyond.</p>
@@ -531,7 +560,9 @@
         Ising Model: a graph of interconnected binary units (0 or 1), where the state of each unit influences its neighbors. Through these 
         interactions, the network converges toward a stable pattern that encodes the memory.<br><br>
 
-        Shown below is a 3D plot of an energy function, where the minima correspond to memory configurations.
+        Shown below is a 3D plot of example energy function. The minima will correspond to the stable memory location. So if the network 
+        was queried at a region near a particular minimum (i.e. partial memory), it would eventually converge to a local minimum to give
+        the full memory as the output.
 
         <div align="center">
           <script type="module" src="../javascript/energy.js"></script>
@@ -540,7 +571,7 @@
       </div>
     </section>
 
-    <section id="learn">
+    <section id="learn" style="min-height: 100vh;">
       <div class="blog-container">
         <h2><b>Learning</b></h2>
         Now that we have defined an energy-based loss function, we need a method to optimize the network parameters so that the system can learn effectively. 
@@ -557,7 +588,7 @@
         </p>
         
         <div>
-          $$ w_{i,j} = \frac{1}{n} \sum_{\mu=1}^{n} \epsilon_{i}^{\mu} \, \epsilon_{j}^{\mu} $$
+          $$ w_{i,j} = \frac{1}{n} \sum_{\mu=1}^{n} (2 \epsilon_{i}^{\mu} - 1) \, (2\epsilon_{j}^{\mu}-1) $$
         </div>
         <ul>
           <li>\( w_{i,j} \) is the weight of the connection between neuron <i>i</i> and neuron <i>j</i></li>
@@ -567,10 +598,147 @@
           <li>\( \epsilon_{i}^{\mu} \) is the state of neuron <i>j</i> in memory pattern <i>μ</i></li>
         </ul>
 
-        Assuming for only two neuron model, as you can see in the formula if the two states are the same (either (1, 1) or (-1, -1)) the 
-        weight value is positive otherwise if they are different ((1, -1) or (-1, 1))
+        Let’s imagine we have just two simple neurons. From the formula, you can see that:
+
+        <ul>
+          <li>If both neurons are in the same state (either (1, 1) or (0, 0)), the connection between them — the weight — is positive.</li>
+          <li>If the neurons are in opposite states ((1, 0) or (0, 1)), the weight becomes negative.</li>
+        </ul>
+        This clever setup ensures that the system always prefers lower energy levels, pulling it toward stable points (minima). In 
+        other words, the weights are chosen so that each possible state naturally settles into one of the energy valleys, just like a 
+        ball rolling down into the lowest part of a hill.
         
 
+      </div>
+    </section>
+
+    <section id="implementation" style="min-height: 100vh;">
+      <div class="blog-container">
+        <h2><b>Implementation</b></h2>
+        <p>
+          The <code>Hnet</code> class below represents a basic Hopfield Network model in C++. 
+          It stores the connection strengths between neurons (the <b>weights</b>), 
+          keeps track of the <b>number of neurons</b> (<code>n</code>), and uses a <b>threshold</b> 
+          value to determine activation.  
+          The main components are:
+          </p>
+          <ul>
+            <li><code>weights</code>: A 2D matrix of doubles representing connections between neurons.</li>
+            <li><code>n</code>: The total number of neurons in the network.</li>
+            <li><code>threshold</code>: The activation threshold for neuron state changes (default is 0.0).</li>
+          </ul>
+          <p>
+          The class provides methods to:
+          </p>
+          <ul>
+            <li><code>energy</code>: Calculate the current energy of the network given a state.</li>
+            <li><code>learn</code>: Update weights using a chosen learning method and training states.</li>
+            <li><code>infer</code>: Evolve the network state until it stabilizes (or until max iterations).</li>
+            <li><code>save_weights</code> / <code>load_weights</code>: Store and retrieve trained weights from a file.</li>
+          </ul>
+          
+        <pre><code>
+          <span class="keyword">class</span> Hnet {
+          <span class="keyword">private</span>:
+              std::vector&lt;std::vector&lt;<span class="type">double</span>&gt;&gt; weights;
+              <span class="type">int</span> n;
+              <span class="type">double</span> threshold = <span class="number">0.0</span>;
+          
+          <span class="keyword">public</span>:
+              Hnet(<span class="type">int</span> n);
+              Hnet(<span class="type">int</span> n, <span class="type">double</span> threshold);
+          
+              <span class="type">double</span> energy(<span class="keyword">const</span> std::vector&lt;<span class="type">int</span>&gt;&amp; state);
+              <span class="type">void</span> learn(Learning_method lm, <span class="keyword">const</span> std::vector&lt;std::vector&lt;<span class="type">int</span>&gt;&gt;&amp; states);
+              <span class="type">void</span> infer(std::vector&lt;<span class="type">int</span>&gt;&amp; state, <span class="type">int</span> max_iters = <span class="number">100</span>);
+              <span class="type">void</span> save_weights(<span class="keyword">const</span> std::string&amp; filename) <span class="keyword">const</span>;
+              <span class="type">void</span> load_weights(<span class="keyword">const</span> std::string&amp; filename);
+          };
+        </code></pre>
+        <p>
+          The <code>learn</code> function is where the Hopfield Network actually <b>trains</b>.  
+          It uses the <b>Hebbian learning rule</b> to update the weights based on training states.  
+          To make it faster, the training is split across multiple CPU threads, and a progress bar shows how much of the training is done.
+        </p>
+        
+        <ul>
+          <li><code>Learning method check</code>: If the method is not Hebbian, it simply returns without doing anything.</li>
+          <li><code>Parallelism</code>: The code detects how many CPU threads are available and splits the training data accordingly.</li>
+          <li><code>Local weights</code>: Each thread calculates its own weight updates to avoid conflicts.</li>
+          <li><code>Hebbian update</code>: For every pair of neurons <code>(j, k)</code>, the weight is updated using the rule 
+            <code>(2*state[j] - 1) * (2*state[k] - 1)</code>, which reinforces same states and penalizes opposite ones.</li>
+          <li><code>Progress bar</code>: A simple console-based progress indicator shows training completion percentage.</li>
+          <li><code>Weight merge</code>: After all threads finish, their local weights are combined into the main weight matrix.</li>
+        </ul>
+        
+        <p>
+          In short: This function takes the training states, applies Hebbian learning in parallel, and updates the network’s weights so that 
+          the given patterns become stable energy minima.
+        </p>
+
+        <pre><code>
+          <span class="type">void</span> Hnet::learn(Learning_method lm, <span class="keyword">const</span> std::vector&lt;std::vector&lt;<span class="type">int</span>&gt;&gt;&amp; states) {
+              <span class="keyword">if</span> (lm != Hebbian) <span class="keyword">return</span>;
+          
+              <span class="type">int</span> num_threads = std::thread::hardware_concurrency();
+              <span class="keyword">if</span> (num_threads == <span class="number">0</span>) num_threads = <span class="number">4</span>;
+          
+              <span class="type">int</span> total_states = states.size();
+              std::atomic&lt;<span class="type">int</span>&gt; processed(<span class="number">0</span>);
+          
+              <span class="type">int</span> chunk_size = (states.size() + num_threads - <span class="number">1</span>) / num_threads;
+              std::vector&lt;std::future&lt;std::vector&lt;std::vector&lt;<span class="type">double</span>&gt;&gt;&gt;&gt; futures;
+          
+              <span class="keyword">for</span> (<span class="type">int</span> t = <span class="number">0</span>; t &lt; num_threads; t++) {
+                  <span class="type">int</span> start = t * chunk_size;
+                  <span class="type">int</span> end   = std::min((<span class="type">int</span>)states.size(), start + chunk_size);
+          
+                  <span class="keyword">if</span> (start &gt;= end) <span class="keyword">break</span>;
+          
+                  futures.push_back(std::async(std::launch::async, [&, start, end]() {
+                      std::vector&lt;std::vector&lt;<span class="type">double</span>&gt;&gt; local_weights(n, std::vector&lt;<span class="type">double</span>&gt;(n, <span class="number">0.0</span>));
+          
+                      <span class="keyword">for</span> (<span class="type">int</span> idx = start; idx &lt; end; idx++) {
+                          <span class="keyword">const</span> auto&amp; state = states[idx];
+                          <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; j++) {
+                              <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; n; k++) {
+                                  <span class="keyword">if</span> (j == k) <span class="keyword">continue</span>;
+                                  local_weights[j][k] += (2 * state[j] - <span class="number">1</span>) * (2 * state[k] - <span class="number">1</span>);
+                              }
+                          }
+          
+                          <span class="type">int</span> done = ++processed;
+                          <span class="keyword">if</span> (done % <span class="number">100</span> == <span class="number">0</span> || done == total_states) {
+                              <span class="type">double</span> progress = (<span class="type">double</span>)done / total_states;
+                              <span class="type">int</span> barWidth = <span class="number">50</span>;
+                              std::cout &lt;&lt; <span class="string">"\r["</span>;
+                              <span class="type">int</span> pos = barWidth * progress;
+                              <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; barWidth; ++i) {
+                                  <span class="keyword">if</span> (i &lt; pos) std::cout &lt;&lt; <span class="string">"="</span>;
+                                  <span class="keyword">else if</span> (i == pos) std::cout &lt;&lt; <span class="string">"&gt;"</span>;
+                                  <span class="keyword">else</span> std::cout &lt;&lt; <span class="string">" "</span>;
+                              }
+                              std::cout &lt;&lt; <span class="string">"] "</span> &lt;&lt; (<span class="type">int</span>)(progress * <span class="number">100.0</span>) &lt;&lt; <span class="string">" %"</span>
+                                        &lt;&lt; std::flush;
+                          }
+                      }
+                      <span class="keyword">return</span> local_weights;
+                  }));
+              }
+          
+              <span class="keyword">for</span> (auto&amp; f : futures) {
+                  auto local = f.get();
+                  <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; j++) {
+                      <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; n; k++) {
+                          <span class="keyword">if</span> (j == k) <span class="keyword">continue</span>;
+                          weights[j][k] += local[j][k];
+                      }
+                  }
+              }
+          
+              std::cout &lt;&lt; <span class="string">"\nTraining complete.\n"</span>;
+          }
+        </code></pre> 
       </div>
     </section>
 
@@ -623,7 +791,10 @@
       <div class="blog-container">
         <h2><b>Other links</b></h2>
         <ol class="reference-list">
-
+          <li><a href="https://youtu.be/1WPJdAW-sFo?si=yx-XRzFIWPwG__jC" target="_blank">A Brain-Inspired Algorithm For Memory - Artem Kirsanov</a></li>
+          <li><a href="https://youtu.be/piF6D6CQxUw?si=Kn8rutb11ygu2q7J" target="_blank">Hopfield network: How are memories stored in neural networks? [Nobel Prize in Physics 2024] - Layerwise Lectures</a></li>
+          <li><a href="https://www.geeksforgeeks.org/machine-learning/hopfield-neural-network/" target="_blank">Hopfield Neural Network - GeeksforGeeks</a></li>
+          <li><a href="https://towardsdatascience.com/hopfield-networks-neural-memory-machines-4c94be821073/" target="_blank">Hopfield Networks: Neural Memory Machines</a></li>
         </ol>
       </div>
     </section>
