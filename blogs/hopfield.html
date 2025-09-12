@@ -388,7 +388,46 @@
       body.dark-mode .string { color: #d69d85; }
       body.dark-mode .number { color: #b5cea8; }
       body.dark-mode .comment { color: #6a9955; font-style: italic; }
-  
+
+      .repo-link {
+        text-align: center;
+        margin: 3rem 0;
+      }
+
+      .repo-link p {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .repo-button {
+        display: inline-block;
+        background-color: #24292e;
+        color: #fff;
+        padding: 0.7rem 1.5rem;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background-color 0.2s ease;
+      }
+
+      .repo-button:hover {
+        background-color: #444c56;
+      }
+
+      body.dark-mode .repo-button {
+        background-color: #2d333b;
+      }
+      body.dark-mode .repo-button:hover {
+        background-color: #444c56;
+      }
+
+      .github-icon {
+        width: 20px;
+        height: 20px;
+        vertical-align: middle;
+        margin-right: 8px;
+        filter: invert(1);
+      }
 
     </style>
   </head>
@@ -400,6 +439,7 @@
       <a href="#history">History</a>
       <a href="#ising">The Ising Model</a>
       <a href="#learn">Learning</a>
+      <a href="#mr">Memory Retreival</a>
       <a href="#implementation">Implementation</a>
       <a href="#references">References</a>
       <a href="#comments">Comments</a>
@@ -411,7 +451,7 @@
     </a> 
     <h1>Hopfield Networks</h1>
     <div class="horizontal_line"></div>
-    <section id="intro" style="min-height: 100vh;">
+    <section id="intro">
       <div class="blog-container">
         <h2><b>Introduction</b></h2>
         Working in robotics naturally pulled me into the world of AI—because in today’s era, intelligence isn’t just about code, 
@@ -419,11 +459,12 @@
         to learn machine learning; instead, I stumbled into it, explored out of curiosity, and discovered how exciting the journey could be.<br><br>
 
         What fascinates me most is not just how AI works today, but how these ideas first took shape—the roots of the complex architectures 
-        and learning algorithms we rely on. That curiosity eventually led me to dive into Associative Memory Models, better known as Hopfield 
-        Networks—a concept that bridges neuroscience, physics, and AI in a way that feels both timeless and futuristic.<br><br>
+        and learning algorithms we rely on. That curiosity eventually led me to dive into <b>Associative Memory Models</b>, better known as <b>
+        Hopfield Networks</b> — a concept that bridges neuroscience, physics, and AI in a way that feels both timeless and futuristic.<br><br>
 
-        One fascinating detail worth mentioning is that J.J. Hopfield was jointly awarded the 2024 Nobel Prize in Physics alongside Geoffrey E. Hinton,
-        recognized for their “foundational discoveries and inventions that enable machine learning with artificial neural networks.”<br><br>
+        One fascinating detail worth mentioning is that <b>J.J. Hopfield</b> was jointly awarded the 2024 Nobel Prize in Physics alongside <b>
+        Geoffrey E. Hinton</b>, recognized for their “<i>foundational discoveries and inventions that enable machine learning with 
+        artificial neural networks.</i>”<br><br>
 
         The ideas I’m exploring here stand on the shoulders of that legacy. They are not just the work of a single mind but the result of decades of 
         collective effort—researchers, physicists, neuroscientists, and computer scientists—each contributing to our understanding of how the brain 
@@ -443,7 +484,7 @@
       </div>
     </section>
 
-    <section id=etym style="min-height: 100vh;">
+    <section id=etym>
       <div class="blog-container">
         <h2><b>Pseudo-Etymology</b></h2>
         The Hopfield network in itself is described as a <i>delocalized content-addressable memory or categorizer using extensive asynchronous parallel computing</i>
@@ -474,7 +515,7 @@
       </div>
     </section>
 
-    <section id="history" style="min-height: 100vh;">
+    <section id="history">
       <div class="blog-container">
         <h2><b>History</b></h2>
         <p>Here’s a quick journey through the key milestones—the discoveries and breakthroughs that paved the way for the creation of Hopfield Networks and beyond.</p>
@@ -525,7 +566,7 @@
     </section>
 
 
-    <section id="ising" style="min-height: 100vh;">
+    <section id="ising">
       <div class="blog-container">
         <h2><b>Ising Model</b></h2>
         Just like some of today’s popular machine learning models—such as diffusion models and physics-informed neural networks 
@@ -571,7 +612,7 @@
       </div>
     </section>
 
-    <section id="learn" style="min-height: 100vh;">
+    <section id="learn">
       <div class="blog-container">
         <h2><b>Learning</b></h2>
         Now that we have defined an energy-based loss function, we need a method to optimize the network parameters so that the system can learn effectively. 
@@ -612,7 +653,51 @@
       </div>
     </section>
 
-    <section id="implementation" style="min-height: 100vh;">
+    <section id="mr">
+      <div class="blog-container">
+        <h2><b>Memory Retrieval</b></h2>
+        <p>
+          We’ve seen how the network learns to store memories using the mathematical framework discussed earlier. 
+          But how do we actually <em>retrieve</em> a stored memory once the network is trained?
+        </p>
+    
+        <p>
+          Hopfield, in his original paper, proposed a binary activation update rule for neurons. 
+          The idea is simple: if we provide a <strong>partial or noisy memory</strong> as input, 
+          each neuron updates its state based on the weighted contributions from all the other connected neurons. 
+          If this summed input crosses a certain threshold, the neuron activates (<code>1</code>); otherwise, it deactivates (<code>0</code>).
+        </p>
+    
+        <p>The update rule can be written as:</p>
+        <div>
+          $$ 
+          \sigma_i =
+          \begin{cases}
+          1, & \text{if } \sum_{j} w_{i,j}\sigma_j - \theta \ge 0 \\
+          0, & \text{otherwise}
+          \end{cases}
+          $$
+        </div>
+    
+        <p>
+          Where:
+          <ul>
+            <li>\( \sigma_i \) is the binary state of neuron \( i \) (either 0 or 1)</li>
+            <li>\( w_{i,j} \) is the learned weight between neuron \( i \) and \( j \)</li>
+            <li>\( \theta \) is the threshold value</li>
+            <li>The summation is over all neurons \( j \) connected to \( i \)</li>
+          </ul>
+        </p>
+    
+        <p>
+          By repeatedly applying this rule, the network gradually converges from the given partial input 
+          to the closest stored memory pattern — effectively completing the memory.
+        </p>
+      </div>
+    </section>
+    
+
+    <section id="implementation">
       <div class="blog-container">
         <h2><b>Implementation</b></h2>
         <p>
@@ -657,17 +742,13 @@
         </code></pre>
         <p>
           The <code>learn</code> function is where the Hopfield Network actually <b>trains</b>.  
-          It uses the <b>Hebbian learning rule</b> to update the weights based on training states.  
-          To make it faster, the training is split across multiple CPU threads, and a progress bar shows how much of the training is done.
+          It uses the <b>Hebbian learning rule</b> to update the weights based on training states.
         </p>
         
         <ul>
           <li><code>Learning method check</code>: If the method is not Hebbian, it simply returns without doing anything.</li>
-          <li><code>Parallelism</code>: The code detects how many CPU threads are available and splits the training data accordingly.</li>
-          <li><code>Local weights</code>: Each thread calculates its own weight updates to avoid conflicts.</li>
           <li><code>Hebbian update</code>: For every pair of neurons <code>(j, k)</code>, the weight is updated using the rule 
             <code>(2*state[j] - 1) * (2*state[k] - 1)</code>, which reinforces same states and penalizes opposite ones.</li>
-          <li><code>Progress bar</code>: A simple console-based progress indicator shows training completion percentage.</li>
           <li><code>Weight merge</code>: After all threads finish, their local weights are combined into the main weight matrix.</li>
         </ul>
         
@@ -680,65 +761,60 @@
           <span class="type">void</span> Hnet::learn(Learning_method lm, <span class="keyword">const</span> std::vector&lt;std::vector&lt;<span class="type">int</span>&gt;&gt;&amp; states) {
               <span class="keyword">if</span> (lm != Hebbian) <span class="keyword">return</span>;
           
-              <span class="type">int</span> num_threads = std::thread::hardware_concurrency();
-              <span class="keyword">if</span> (num_threads == <span class="number">0</span>) num_threads = <span class="number">4</span>;
-          
               <span class="type">int</span> total_states = states.size();
-              std::atomic&lt;<span class="type">int</span>&gt; processed(<span class="number">0</span>);
           
-              <span class="type">int</span> chunk_size = (states.size() + num_threads - <span class="number">1</span>) / num_threads;
-              std::vector&lt;std::future&lt;std::vector&lt;std::vector&lt;<span class="type">double</span>&gt;&gt;&gt;&gt; futures;
+              <span class="keyword">for</span> (<span class="type">int</span> idx = <span class="number">0</span>; idx &lt; total_states; idx++) {
+                  <span class="keyword">const</span> <span class="keyword">auto</span>&amp; state = states[idx];
           
-              <span class="keyword">for</span> (<span class="type">int</span> t = <span class="number">0</span>; t &lt; num_threads; t++) {
-                  <span class="type">int</span> start = t * chunk_size;
-                  <span class="type">int</span> end   = std::min((<span class="type">int</span>)states.size(), start + chunk_size);
-          
-                  <span class="keyword">if</span> (start &gt;= end) <span class="keyword">break</span>;
-          
-                  futures.push_back(std::async(std::launch::async, [&, start, end]() {
-                      std::vector&lt;std::vector&lt;<span class="type">double</span>&gt;&gt; local_weights(n, std::vector&lt;<span class="type">double</span>&gt;(n, <span class="number">0.0</span>));
-          
-                      <span class="keyword">for</span> (<span class="type">int</span> idx = start; idx &lt; end; idx++) {
-                          <span class="keyword">const</span> auto&amp; state = states[idx];
-                          <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; j++) {
-                              <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; n; k++) {
-                                  <span class="keyword">if</span> (j == k) <span class="keyword">continue</span>;
-                                  local_weights[j][k] += (2 * state[j] - <span class="number">1</span>) * (2 * state[k] - <span class="number">1</span>);
-                              }
-                          }
-          
-                          <span class="type">int</span> done = ++processed;
-                          <span class="keyword">if</span> (done % <span class="number">100</span> == <span class="number">0</span> || done == total_states) {
-                              <span class="type">double</span> progress = (<span class="type">double</span>)done / total_states;
-                              <span class="type">int</span> barWidth = <span class="number">50</span>;
-                              std::cout &lt;&lt; <span class="string">"\r["</span>;
-                              <span class="type">int</span> pos = barWidth * progress;
-                              <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; barWidth; ++i) {
-                                  <span class="keyword">if</span> (i &lt; pos) std::cout &lt;&lt; <span class="string">"="</span>;
-                                  <span class="keyword">else if</span> (i == pos) std::cout &lt;&lt; <span class="string">"&gt;"</span>;
-                                  <span class="keyword">else</span> std::cout &lt;&lt; <span class="string">" "</span>;
-                              }
-                              std::cout &lt;&lt; <span class="string">"] "</span> &lt;&lt; (<span class="type">int</span>)(progress * <span class="number">100.0</span>) &lt;&lt; <span class="string">" %"</span>
-                                        &lt;&lt; std::flush;
-                          }
-                      }
-                      <span class="keyword">return</span> local_weights;
-                  }));
-              }
-          
-              <span class="keyword">for</span> (auto&amp; f : futures) {
-                  auto local = f.get();
                   <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; j++) {
                       <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; n; k++) {
                           <span class="keyword">if</span> (j == k) <span class="keyword">continue</span>;
-                          weights[j][k] += local[j][k];
+                          weights[j][k] += (2 * state[j] - 1) * (2 * state[k] - 1);
                       }
                   }
               }
-          
-              std::cout &lt;&lt; <span class="string">"\nTraining complete.\n"</span>;
           }
-        </code></pre> 
+        </code></pre>
+        <p>
+        Starting from an <b>initial (possibly incomplete or noisy) state</b>, the <code>infer</code> function repeatedly updates each 
+        neuron based on the weighted input from all other neurons until the network reaches a stable state or the maximum number of 
+        iterations is reached. Each neuron's new state is computed using the net weighted sum of all other neurons. The process stops 
+        early if the state stops changing (converges).
+        </p>
+
+        <pre><code>
+          <span class="type">void</span> Hnet::infer(std::vector&lt;<span class="type">int</span>&gt;&amp; incomplete_state, <span class="type">int</span> max_iters) {
+              <span class="keyword">for</span> (<span class="type">int</span> iter = <span class="number">0</span>; iter &lt; max_iters; iter++) {
+                  std::vector&lt;<span class="type">int</span>&gt; next_state(n);
+          
+                  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+                      <span class="type">double</span> net_input = <span class="number">0.0</span>;
+          
+                      <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; j++) {
+                          <span class="keyword">if</span> (i == j) <span class="keyword">continue</span>;
+                          net_input += weights[i][j] * (2 * incomplete_state[j] - 1);
+                      }
+          
+                      net_input -= threshold;
+                      next_state[i] = net_input &gt;= <span class="number">0</span> ? <span class="number">1</span> : <span class="number">0</span>;
+                  }
+          
+                  <span class="keyword">if</span> (next_state == incomplete_state) <span class="keyword">break</span>;
+                  incomplete_state.swap(next_state);
+              }
+          }
+        </code></pre>
+
+        You can check out the full implementation of this code with parallelization performed on the <b>MNIST handwritten digit recognition</b> dataset 
+        here. My stupid-ass just tried training it on all the images even though Hopfield mentioned about the <b>0.15N soft limit</b>. So all I get 
+        is some random spurious pattern. Also one thing to mention is I found a paper where they attempted H-Net on the MNIST dataset and they
+        mentioned the Hebbian method doesn't work well so I will try implementing the Storkey method on this.
+        <div class="repo-link">
+          <a href="https://github.com/username/project-name" target="_blank" class="repo-button">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub" class="github-icon">
+            View on GitHub
+          </a>
+        </div>
       </div>
     </section>
 
