@@ -441,6 +441,7 @@
       <a href="#mr">Memory Retreival</a>
       <a href="#implementation">Implementation</a>
       <a href="#conv">Convergence Proof</a>
+      <a href="#conclusion">Conclusion</a>
       <a href="#references">References</a>
       <a href="#comments">Comments</a>
     </nav>
@@ -569,14 +570,14 @@
     <section id="ising">
       <div class="blog-container">
         <h2><b>Ising Model</b></h2>
-        Just like some of today’s popular machine learning models—such as diffusion models and physics-informed neural networks 
+        Just like some of today’s popular machine learning models—such as <b>diffusion models</b> and <b>physics-informed neural networks</b> 
         (PINNs)—Hopfield Networks are also grounded in physics. The goal was to create a general content-addressable memory, and in 
         his original paper, Hopfield pointed out that any physical system that naturally settles into stable configurations can serve as 
         a model.<br><br>
 
-        One of the key inspirations was the Ising Model, introduced to describe magnetism in ferromagnetic materials. In this model, every 
+        One of the key inspirations was the <b>Ising Model</b>, introduced to describe magnetism in ferromagnetic materials. In this model, every 
         unit of the material carries a tiny “spin” (either +1 or –1). The overall energy of the system depends on how these spins are 
-        arranged. When placed in a magnetic field, the spins tend to align in ways that lower the energy—pushing the system toward stability. <br><br>
+        arranged. When placed in a magnetic field, the spins tend to align in ways that lower the energy—pushing the system towards <i>stability</i>. <br><br>
         
         This is more than just theory—you can experiment with it! Below, try clicking on the spins in the interactive setup to see how 
         the system’s energy shifts. Notice how each dipole (spin) only “talks” to its neighbors, yet together they form a collective behavior. 
@@ -636,7 +637,7 @@
           <li>\( n \) is the total number of stored patterns</li>
           <li>\( \mu \) is the index of a specific memory pattern</li>
           <li>\( \epsilon_{i}^{\mu} \) is the state of neuron <i>i</i> in memory pattern <i>μ</i></li>
-          <li>\( \epsilon_{i}^{\mu} \) is the state of neuron <i>j</i> in memory pattern <i>μ</i></li>
+          <li>\( \epsilon_{j}^{\mu} \) is the state of neuron <i>j</i> in memory pattern <i>μ</i></li>
         </ul>
 
         Let’s imagine we have just two simple neurons. From the formula, you can see that:
@@ -818,7 +819,7 @@
         </code></pre>
 
         You can check out the full implementation of this code with parallelization performed on the <b>MNIST handwritten digit recognition</b> dataset 
-        here. My stupid-ass just tried training it on all the images even though Hopfield mentioned about the <b>0.15N soft limit</b>. So all I get 
+        here. My stupid-self just tried training it on all the images even though Hopfield mentioned about the <b>0.15N soft limit</b>. So all I get 
         is some random spurious pattern. Also one thing to mention is I found a paper where they attempted H-Net on the MNIST dataset and they
         mentioned the Hebbian method doesn't work well so I will try implementing the Storkey method on this.
         <div class="repo-link">
@@ -908,6 +909,27 @@
           know that diagonal elements of \( W \) are non-negative, we can say \( \Delta E \ge 0\) for every neuron. We also that the energy
           function is defined on a finite state space for a given neural network which means it will be a bounded function.<br>
           \(\therefore \) E will always converge.
+        </p>
+      </div>
+    </section>
+
+    <section id="conclusion">
+      <div class="blog-container">
+        <h2><b>Conclusion</b></h2>
+        <p>
+          Hopfield Networks may seem like a relic of early neural network research, but their core ideas continue to ripple through modern AI 
+          — from associative memory mechanisms to modern attention-based architectures. What makes them remarkable is not just their ability 
+          to store and retrieve patterns, but how they bridge diverse disciplines: the physics of energy minimization, the biology of neural 
+          plasticity, and the mathematics of dynamical systems.
+        </p>
+        <p>
+          While they are no longer the state-of-the-art for large-scale pattern recognition, they remain a powerful mental model — a reminder 
+          that intelligence can emerge from simple local interactions when embedded in the right structure. For anyone curious about where 
+          neural networks came from, studying Hopfield Networks is like looking at the DNA of modern AI.
+        </p>
+        <p>
+          This blog only scratches the surface. I plan to keep updating this post and experiment with extensions like continuous Hopfield 
+          networks and the Storkey learning rule, and see how these early architectures can still surprise us today.
         </p>
       </div>
     </section>
