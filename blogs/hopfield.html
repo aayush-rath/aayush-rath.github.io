@@ -428,7 +428,6 @@
         margin-right: 8px;
         filter: invert(1);
       }
-
     </style>
   </head>
 
@@ -437,10 +436,11 @@
       <a href="#intro">Introduction</a>
       <a href="#etym">Pseudo-Etymology</a>
       <a href="#history">History</a>
-      <a href="#ising">The Ising Model</a>
+      <a href="#ising">Ising Model</a>
       <a href="#learn">Learning</a>
       <a href="#mr">Memory Retreival</a>
       <a href="#implementation">Implementation</a>
+      <a href="#conv">Convergence Proof</a>
       <a href="#references">References</a>
       <a href="#comments">Comments</a>
     </nav>
@@ -647,8 +647,20 @@
         </ul>
         This clever setup ensures that the system always prefers lower energy levels, pulling it toward stable points (minima). In 
         other words, the weights are chosen so that each possible state naturally settles into one of the energy valleys, just like a 
-        ball rolling down into the lowest part of a hill.
-        
+        ball rolling down into the lowest part of a hill. Since we are dealing with binary values of the state (1 and 0 instead of 1 and -1), 
+        the above energy can be rewritten as
+        <div>
+          $$
+            E = -\frac{1}{2} \sum_{i}\sum_{j, j \neq i} w_{i,j} (2\epsilon_i -1)(2\epsilon_j-1).
+          $$
+        </div>
+
+        <div class="reddit-embed">
+          <blockquote class="reddit-card">
+            <a href="https://www.reddit.com/r/physicsmemes/comments/1g00iej/give_that_neuron_a_beer/"></a>
+          </blockquote>
+        </div>
+        <script async src="https://embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>
 
       </div>
     </section>
@@ -671,9 +683,9 @@
         <p>The update rule can be written as:</p>
         <div>
           $$ 
-          \sigma_i =
+          \epsilon_i =
           \begin{cases}
-          1, & \text{if } \sum_{j} w_{i,j}\sigma_j - \theta \ge 0 \\
+          1, & \text{if } \sum_{j} w_{i,j}\epsilon_j - \theta \ge 0 \\
           0, & \text{otherwise}
           \end{cases}
           $$
@@ -682,9 +694,9 @@
         <p>
           Where:
           <ul>
-            <li>\( \sigma_i \) is the binary state of neuron \( i \) (either 0 or 1)</li>
+            <li>\( \epsilon_i \) is the binary state of neuron \( i \) (either 0 or 1)</li>
             <li>\( w_{i,j} \) is the learned weight between neuron \( i \) and \( j \)</li>
-            <li>\( \theta \) is the threshold value</li>
+            <li>\( \theta \) is the threshold value (mostly taken as zero)</li>
             <li>The summation is over all neurons \( j \) connected to \( i \)</li>
           </ul>
         </p>
@@ -810,11 +822,93 @@
         is some random spurious pattern. Also one thing to mention is I found a paper where they attempted H-Net on the MNIST dataset and they
         mentioned the Hebbian method doesn't work well so I will try implementing the Storkey method on this.
         <div class="repo-link">
-          <a href="https://github.com/username/project-name" target="_blank" class="repo-button">
+          <a href="https://github.com/aayush-rath/Hopfield_Networks.git" target="_blank" class="repo-button">
             <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub" class="github-icon">
             View on GitHub
           </a>
         </div>
+      </div>
+    </section>
+
+    <section id="conv">
+      <div class="blog-container">
+        <h2><b>Convergence Proof</b></h2>
+        <p>
+          Now that we have a basic understanding of what a Hopfield Network is, how it can be used, and to some extent why it works, we 
+          can move on to a deeper question—why is it able to store memories? To answer this, we need to explore its convergence properties.
+          Jehoshua Bruck published a paper that examines the convergence behavior of Hopfield networks in great detail. In the following 
+          section, I have drawn upon some of the theorems and proofs from his work to explain the convergence of Hopfield networks, 
+          specifically for the case of serial mode with symmetric weights. Here, serial means that the neuron states are updated one at 
+          a time, and symmetric means that \( w_{i,j} = w_{j,i} \).
+        </p>
+        <b>Theorem</b>: 
+        <i>
+          Let \( N = (W, T) \) where \( N \) is the neural network, \( W \) is the matrix of the weights of network and \( T \) is a vector of
+          threshold values (essentially a \( 0 \) vector as given in the example) operating in serial mode. \( W \) is basically a symmetric matrix with 
+          non-negative diagonal elements (obviously zero since we are not considering self-connections). Then the network \( N \) will always 
+          converge to a stable state.
+        </i>
+        <p>
+        <i>Proof:</i><br>
+        Do note that I have considered state value to be \( \epsilon = \pm 1 \) instead of \( 0/1 \) because that is how it has been done in the paper. 
+        The idea is still the same and maybe you can try using \( 0/1 \) to write the proof on your own for fun.<br><br>
+        Threshold vector: \( T = [ \theta_1, \theta_2, \ldots, \theta_n ]^T \) <br>
+        State vector at \(t: V_k(t) = [ \epsilon^k_1, \epsilon^k_2, \ldots, \epsilon^k_n ]^T \)<br><br>
+        The energy function is defined as:
+        <div>
+          $$
+          E(t) = V(t)^T W V(t) - 2V(t)^TT
+          $$ 
+        </div>
+        </p>
+        We can define the discrete energy change with time as \( \Delta E = E(t+1) - E(t) \) associated with the change in state 
+        <div>
+         $$
+         \Delta \epsilon_j^k = 
+         \begin{cases}
+         0, & \text{if } (\epsilon^k_j(t) \times (\sum_{j} w_{i,j}\epsilon_j - \theta_j)) \ge 0 \\
+         2, & \text{if } \epsilon^k_j(t) = -1 \text{ and } \sum_{j} w_{i,j}\epsilon_j - \theta_j \ge 0 \\
+         -2, & \text{otherwise}
+         \end{cases}
+         $$
+        </div>
+        Now we can formulate the change in the energy using the defintion of state change,
+        <div>
+          $$
+          \begin{aligned}
+          \Delta E &= E(t+1)-E(t) \\
+          &= V_k(t+1)^T W V_k(t+1) - 2V_k(t+1)^T T
+             - \bigl(V_k(t)^T W V_k(t) - 2V_k(t)^T T\bigr) \\
+          &= \bigl(V_k(t)+\Delta V_k\bigr)^T W \bigl(V_k(t)+\Delta V_k\bigr)
+             - 2\bigl(V_k(t)+\Delta V_k\bigr)^T T
+             - V_k(t)^T W V_k(t) + 2V_k(t)^T T \\
+          &= V_k(t)^T W V_k(t) + \Delta V_k^T W V(t) + V_k(t)^T W \Delta V_k
+             + \Delta V_k^T W \Delta V_k - 2V_k(t)^T T - 2\Delta V_k^T T - V_k(t)^T W V_k(t) + 2V_k(t)^T T \\
+          &= \Delta V_k^T W V_k(t) + V_k(t)^T W \Delta V_k + \Delta V_k^T W \Delta V_k - 2\Delta V_k^T T \\
+          &= 2\,\Delta V_k^T W V_k(t) - 2\,\Delta V_k^T T + \Delta V_k^T W \Delta V_k
+             \qquad(\text{since } W=W^T)\\
+          &= 2\,\Delta V_k^T\bigl(WV_k(t)-T\bigr) + \Delta V_k^T W \Delta V_k\\
+          &= 2\, \sum_i \sum_j (w_{i,j} \epsilon_j^k - \theta_j) \Delta \epsilon_i^k + \sum_i \sum_j w_{i,j} \Delta \epsilon_j^k \Delta \epsilon_i^k
+          \end{aligned}
+          $$
+        </div>
+        <p>
+          We are doing this computation in the serial mode, a let us say we do it at the neuron i for instance
+          then \( \Delta \epsilon_j^k = 0\) if \( j \neq i\),
+        </p>
+        <div>
+          $$
+            \begin{aligned}
+            \Delta E &= 2\, \sum_i \sum_j (w_{i,j} \epsilon_j^k - \theta_j) \Delta \epsilon_i^k + \sum_i w_{i,i} \Delta (\epsilon_j^k)^2\\
+            \end{aligned}
+          $$
+        </div>
+        <p>
+          It is easy to see from the definition of \( \Delta \epsilon_j^k \) that the first term is always positive or zero and as we
+          know that diagonal elements of \( W \) are non-negative, we can say \( \Delta E \ge 0\) for every neuron. We also that the energy
+          function is defined on a finite state space for a given neural network which means it will be a bounded function.<br>
+          \(\therefore \) E will always converge.
+        </p>
       </div>
     </section>
 
