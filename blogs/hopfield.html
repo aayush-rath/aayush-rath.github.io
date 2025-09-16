@@ -655,6 +655,10 @@
             E = -\frac{1}{2} \sum_{i}\sum_{j, j \neq i} w_{i,j} (2\epsilon_i -1)(2\epsilon_j-1).
           $$
         </div>
+        <p>
+          One thing to observe is the weird \(2 \epsilon - 1\) instead of just using \( \epsilon \). Well that is just a way to accomodate 
+          the states to still give the same energy irrespective of whether we go with the \( \pm 1 \) representation or the binary representation \( (1, 0) \).
+        </p>
 
         <div class="reddit-embed">
           <blockquote class="reddit-card">
@@ -819,9 +823,10 @@
         </code></pre>
 
         You can check out the full implementation of this code with parallelization performed on the <b>MNIST handwritten digit recognition</b> dataset 
-        here. My stupid-self just tried training it on all the images even though Hopfield mentioned about the <b>0.15N soft limit</b>. So all I get 
-        is some random spurious pattern. Also one thing to mention is I found a paper where they attempted H-Net on the MNIST dataset and they
-        mentioned the Hebbian method doesn't work well so I will try implementing the Storkey method on this.
+        here. My stupid-self just tried training it on all the images even though Hopfield mentioned about the <b>\( 0.15N \) soft limit</b> which basically 
+        means that a network with \( N \) nodes can memorize upto \( 0.15N \) patterns. So all I get is some random spurious pattern. Also 
+        one thing to mention is I found a paper where they attempted H-Net on the MNIST dataset and they mentioned the Hebbian method doesn't 
+        work well so I will try implementing the Storkey method on this.
         <div class="repo-link">
           <a href="https://github.com/aayush-rath/Hopfield_Networks.git" target="_blank" class="repo-button">
             <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub" class="github-icon">
