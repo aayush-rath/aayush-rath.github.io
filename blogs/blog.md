@@ -107,12 +107,12 @@
       }
 
       @keyframes growLine {
-          from {
-          width: 0;
-          }
-          to {
-          width: 100%;
-          }
+        from {
+        width: 0;
+        }
+        to {
+        width: 100%;
+        }
       }
 
       body {
@@ -129,7 +129,7 @@
       }
 
       .dark-mode-toggle {
-        position: absolute;
+        position: fixed;
         width: 50px;
         height: 50px;
         font-size: 20px;
@@ -143,6 +143,9 @@
         cursor: pointer;
         box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         transition: background-color 0.3s;
+
+        z-index: 9999;
+        pointer-events: auto;
       }
 
       body.dark-mode .dark-mode-toggle {
@@ -152,8 +155,8 @@
 
       .blog-container {
         max-width: 70%;
-        margin: 100px auto 40px auto;
-        padding: 30px;
+        margin: 50px auto 40px auto;
+        padding: 10px;
         background-color: #fffaf4;
         color: #222222;
         font-family: 'Georgia', 'Times New Roman', serif;
@@ -161,12 +164,94 @@
         font-size: 18px;
         border-radius: 12px;
         transition: background-color 0.4s, color 0.4s;
-    }
+      }
 
-    body.dark-mode .blog-container {
-        background-color: #222222;
-        color: #eaeaea;
-    }
+      .blog-container h2 {
+        padding-left: 0;
+      }
+
+      body.dark-mode .blog-container {
+          background-color: #222222;
+          color: #eaeaea;
+      }
+
+      .blog-image {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .blog-image img {
+        max-width: 700px;
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+      }
+
+      nav.sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 220px;
+        background-color: #f6ddd0;
+        padding-top: 80px;
+        font-family: 'Montserrat', sans-serif;
+        transition: transform 0.3s ease;
+        overflow-y: auto;
+        z-index: 1000;
+        transform: translateX(-220px);
+      }
+
+      nav.sidebar a {
+        display: block;
+        padding: 12px 20px;
+        color: #222;
+        text-decoration: none;
+        transition: background 0.2s;
+      }
+
+      nav.sidebar a:hover {
+        background-color: #ddd;
+      }
+
+      body.dark-mode nav.sidebar {
+        background-color: #333;
+      }
+
+      body.dark-mode nav.sidebar a {
+        color: #f5f5f5;
+      }
+
+      nav.sidebar.open {
+        transform: translateX(0);
+      }
+
+
+      .sidebar-toggle {
+        position: fixed;
+        top: 15px;
+        left: 120px;
+        background-color: #f6ddd0;
+        color: #222;
+        border: none;
+        border-radius: 6px;
+        font-size: 24px;
+        padding: 8px 12px;
+        cursor: pointer;
+        z-index: 1100;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        transition: background-color 0.3s;
+      }
+
+      .sidebar-toggle:hover {
+        background-color: #e0c9bc;
+      }
+
+      body.dark-mode .sidebar-toggle {
+        background-color: #333;
+        color: #fff;
+      }
 
       body, .page-header, .site-footer, .button, .horizontal_line,.blog-container, h1, p, a {
         transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
@@ -175,7 +260,10 @@
   </head>
 
   <body>
+    <nav class="sidebar" id="sidebar">
+    </nav>
     <button id="darkModeToggle" class="dark-mode-toggle">🌙</button>
+    <button class="sidebar-toggle" id="sidebarToggle">☰</button>
     <a href="../index.html" class="home-button">
         <img src="../assets/images/home_button.png" alt="Home" width="40px">
     </a> 
@@ -206,58 +294,63 @@
     </footer>
 
     <script>
-      const toggleBtn = document.getElementById('darkModeToggle');
-
-      const isDarkMode = () => document.body.classList.contains('dark-mode');
-
-      function applyDarkModePreference() {
-        const enabled = localStorage.getItem('darkMode') === 'enabled';
-        if (enabled) document.body.classList.add('dark-mode');
-
-        if (enabled) {
-          toggleBtn.textContent = '🌞';
-        } else {
-          toggleBtn.textContent = '🌙';
-        }
-
-        if (window.updateThreeSceneForDarkMode)
-          updateThreeSceneForDarkMode(enabled);
-      }
-
-      document.addEventListener('sceneReady', applyDarkModePreference);
-
-      toggleBtn.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        const enabled = isDarkMode();
-        localStorage.setItem('darkMode', enabled ? 'enabled' : 'disabled');
-
-        if (enabled) {
-          toggleBtn.textContent = '🌞';
-        } else {
-          toggleBtn.textContent = '🌙';
-        }
-
-        if (window.updateThreeSceneForDarkMode)
-          updateThreeSceneForDarkMode(enabled);
-      });
-
-      applyDarkModePreference();
-
+        const toggleBtn = document.getElementById('darkModeToggle');
+        
+        const isDarkMode = () => document.body.classList.contains('dark-mode');
+        
         function updateGiscusTheme(isDark) {
-        const giscusFrame = document.querySelector('iframe.giscus-frame');
-        if (!giscusFrame) return;
-        const message = {
+            const giscusFrame = document.querySelector('iframe.giscus-frame');
+            if (!giscusFrame) return;
+            const message = {
             setConfig: {
-            theme: isDark ? 'dark' : 'light'
+                theme: isDark ? 'dark' : 'light'
             }
-        };
-        giscusFrame.contentWindow.postMessage(message, 'https://giscus.app');
+            };
+            giscusFrame.contentWindow.postMessage(message, 'https://giscus.app');
         }
-
+        
+        function applyDarkModePreference() {
+            const enabled = localStorage.getItem('darkMode') === 'enabled';
+            document.body.classList.toggle('dark-mode', enabled);
+        
+            toggleBtn.textContent = enabled ? '🌞' : '🌙';
+        
+            if (window.updateThreeSceneForDarkMode)
+            window.updateThreeSceneForDarkMode(enabled);
+        
+            updateGiscusTheme(enabled);
+        }
+        
         toggleBtn.addEventListener('click', () => {
-        const isDark = document.body.classList.toggle('dark-mode');
-        localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
-        updateGiscusTheme(isDark);
+            const enabled = !isDarkMode();
+            document.body.classList.toggle('dark-mode', enabled);
+            localStorage.setItem('darkMode', enabled ? 'enabled' : 'disabled');
+            toggleBtn.textContent = enabled ? '🌞' : '🌙';
+        
+            if (window.updateThreeSceneForDarkMode)
+            window.updateThreeSceneForDarkMode(enabled);
+        
+            updateGiscusTheme(enabled);
+        });
+        
+        document.addEventListener('sceneReady', applyDarkModePreference);
+        applyDarkModePreference();
+
+        const sidebar = document.getElementById("sidebar");
+        const sidebarToggle = document.getElementById("sidebarToggle");
+
+        sidebarToggle.addEventListener("click", () => {
+          sidebar.classList.toggle("open");
+        });
+
+        document.querySelectorAll('.sidebar a').forEach(anchor => {
+          anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+              behavior: 'smooth'
+            });
+            sidebar.classList.remove("open");
+          });
         });
     </script>
   </body>
