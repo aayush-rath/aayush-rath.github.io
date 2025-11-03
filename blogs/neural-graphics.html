@@ -12,6 +12,8 @@
 
       gtag('config', 'G-BX8JFPKXJ4');
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.8">
     <meta name="author" content="Aayush Rath">
@@ -253,13 +255,112 @@
       body, .page-header, .site-footer, .button, .horizontal_line,.blog-container, h1, p, a {
         transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
       }
+
+      #rayTrace {
+        aspect-ratio: 2;
+        width: 100%;
+        max-width: 800px;
+        height: auto;
+        border: none;
+        background-color: #fffaf4;
+        margin: 0 auto;
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        #rayTrace {
+          max-width: 100%;
+          aspect-ratio: auto;
+        }
+      }
+
+      #rayTraceMulti {
+        aspect-ratio: 2;
+        width: 100%;
+        max-width: 800px;
+        height: auto;
+        border: none;
+        background-color: #fffaf4;
+        margin: 0 auto;
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        #rayTraceMulti {
+          max-width: 100%;
+          aspect-ratio: auto;
+        }
+      }
+
+      #nerfplay {
+        aspect-ratio: 2;
+        width: 100%;
+        max-width: 800px;
+        height: auto;
+        border: none;
+        background-color: #fffaf4;
+        margin: 0 auto;
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        #nerfplay {
+          max-width: 100%;
+          aspect-ratio: auto;
+        }
+      }
+
+      .button-wrapper {
+        text-align: center;
+      }
+
+      #dropButton {
+        display: inline-block;
+        margin: 20px auto 30px auto;
+        padding: 12px 28px;
+        background: #ffffff;
+        color: #111111;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        font-family: 'Montserrat', sans-serif;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.25s ease;
+      }
+
+
+      #dropButton:hover {
+        background: #f2f2f2;
+        transform: scale(1.05);
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Dark mode styling */
+      body.dark-mode #dropButton {
+        background: #1e1e1e;
+        color: #ffffff;
+        border: 1px solid #333;
+        box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+      }
+
+      body.dark-mode #dropButton:hover {
+        background: #2a2a2a;
+        box-shadow: 0 6px 14px rgba(255, 255, 255, 0.15);
+        transform: scale(1.05);
+      }
     </style>
   </head>
   
   <body>
     <nav class="sidebar" id="sidebar">
         <a href="#intro">Introduction</a>
-        <a href="#pipeline">Graphics Pipeline</a>
+        <a href="#render">Rendering</a>
+        <a href="#nerf">Neural Radiance Fields</a>
+        <a href="#implementation">Implementation</a>
+        <a href="#conclusion">Conclusion</a>
+        <a href="#comments">Comments</a>
     </nav>
     <button id="darkModeToggle" class="dark-mode-toggle">🌙</button>
     <button class="sidebar-toggle" id="sidebarToggle">☰</button>
@@ -272,34 +373,259 @@
     <section id="intro">
       <div class="blog-container">
         <h2><b>Introduction</b></h2>
+        Graphical primitives form the foundation of how we represent complex shapes on a computer —by breaking them down into simpler ones. Take my personal favorite, 
+        the movie <b>TRON (1982)</b>. Every object in the digital world of TRON—from the light cycles to the voxelized version of Jeff Bridges—was built using basic 3D 
+        shapes like cubes, tetrahedrons, cones, and spheres (and their boolean combinations).<br><br>
 
+        <div class="blog-image">
+          <img src="../assets/blog-images/NGP/Tron.gif" alt="Tron 1982">
+        </div>
+
+        Since then, computer graphics has evolved dramatically, but the idea of using primitives still lies at the core of rendering any 3D object onto a 2D screen. 
+        You’ve probably seen triangles used to approximate 3D surfaces—they’re the simplest closed shapes with positive area (simplicial complex) and perfectly suited 
+        for GPUs to transform from the 3D world to our screens.<br><br>
+
+        Recently, a lot has been happening. Unless you’ve been living under a rock, you’ve probably heard about deep learning and machine learning—and how they’re 
+        slowly taking over the world. But not every AI is <b>HAL 9000</b>. Thanks to the rise of neural networks, gradient descent, and all that good stuff, computer graphics 
+        has gifted itself two beautiful innovations: NeRFs and Gaussian Splatting. In this blog, I’ll dive into how these modern “primitives” provide powerful new ways 
+        to represent models—and the elegant math that makes them work. But before we jump in, let’s take a moment to talk about how graphics used to be done (and is still done).
+
+        <div class="blog-image">
+          <img src="../assets/blog-images/NGP/JeffBridges.gif" alt="Jeff Bridges">
+        </div>
       </div>
     </section>
 
-    <section id="pipeline">
+    <section id="render">
       <div class="blog-container">
-        <h2><b>Graphics Pipeline</b></h2>
+        <h2><b>Rendering</b></h2>
+        Rendering in computer graphics is the process of transforming a 3D world—much like the one we live in—into a 2D image that appears on a screen from a particular viewpoint.
+        It involves an enormous number of mathematical operations running in parallel to determine how every surface interacts with light and perspective. This is where 
+        GPUs shine: they are built to handle thousands of these computations simultaneously. Their ability to perform these calculations at incredible speed is what makes 
+        real-time rendering possible in modern video games and simulations.<br><br>
 
+        Broadly speaking, there are two main classes of rendering algorithms: <b>Rasterization</b> and <b>Ray Tracing</b>. Since this blog focuses on understanding how NeRFs work, 
+        we’ll primarily explore Ray Tracing. It’s a technique that feels intuitive—rooted in our geometric understanding of how light travels and interacts with objects, 
+        without diving into the particle-versus-wave shenanigans.<br><br>
+
+        In the physical world, we perceive objects through the light rays that bounce off their surfaces and enter our eyes. These rays originate from sources like the Sun or a 
+        light bulb, and the way an object reflects them determines how we see it. For instance, a metallic surface reflects light perfectly—its angle of reflection mirrors the 
+        angle of incidence—creating a sharp, mirror-like appearance. In contrast, a rough or diffuse surface scatters light in many directions, giving it a soft, matte look.
+        The proportion of light that’s reflected versus transmitted also shapes how an object appears: if most light is reflected, the object looks opaque; if it’s partly 
+        reflected and partly refracted, it appears translucent; and if most light passes through, it becomes transparent.<br><br>
+        <div class="blog-image">
+          <img src="../assets/blog-images/NGP/material_reflec.png" alt="Reflection">
+        </div>
+        <div class="blog-image">
+          <img src="../assets/blog-images/NGP/material_refrac.png" alt="Refraction">
+        </div>
+        With this understanding, we can now engineer a method to render an image. Given a light source, an object, and a camera placed at a specific position, the most 
+        straightforward idea is to shoot rays from the light source, observe how they interact with the object’s surface based on its material properties—how they reflect, 
+        refract, or scatter—and finally collect the rays that end up reaching the camera.
+        In theory, this approach works beautifully and produces highly realistic renderings. But in practice, it’s computationally expensive. Tracing every possible ray from 
+        the light source—and accounting for all their reflections and refractions—is simply too heavy to compute, and we have no easy way of knowing how many rays to sample 
+        in the first place.<br><br>
+        
+        Here’s where a clever trick comes in: since we only care about the rays that actually reach the camera, we can reverse the process. Instead of shooting rays from the 
+        light source, we cast them from the camera into the scene and track how they interact with objects. This inversion drastically reduces the number of computations
+        while achieving the same visual effect.<br><br>
+
+        When we want to render something we are just coloring a bunch of pixels on the screen at the end of the day. That is what pixels are for. Each pixel is a unit that 
+        shows the color visible to the human eye. The color is represented by the RGB value of a pixel. Every unique proportion of RGB gives a unique color with each channel's 
+        value being an integer from 0 to 255 (8bit).<br><br>
+
+        When we set out to render an image of a 3D model, we build upon this understanding of light and pixels. Instead of firing countless rays from the light source, we start 
+        right where it matters — the camera. From the camera’s origin, we cast rays that travel through the center of each pixel on the image plane (one such ray is shown below). 
+        Each ray is extended into the scene until it intersects an object. Once that happens, the color of the object at the intersection point determines the color of that pixel.<br><br>
+        
+        To make the rendering more realistic, we apply basic physics based on the material properties of the surface it hits. If the object is metallic, we reflect the ray and use 
+        the color from wherever it bounces next. If it’s transparent, we refract the ray and use the color of what lies beyond. And so on — the principle remains the same. Each 
+        ray tells a tiny story of light’s journey through the scene, and together, they paint the final image we see (Sorry to cringe you out!).<br><br>
+
+        If we view an environment in the global frame, the camera position can be represented as a vector \( \vec{o} \) and vector \( \vec{d} \) pointing from the camera origin to a 
+        given pixel representing the direction of the ray. So we can mathematically represent a ray as the vector sum of origin position and the direction vector scaled up to any value (\(t \in \mathbb{R}\)) 
+        <div>
+          $$ \vec{r} = \vec{o} + t \vec{d}$$
+        </div>
+
+        If you want gain deeper knowledge on ray tracing and would enjoy building your own ray tracer I would suggest checking out 
+        <a href="https://raytracing.github.io/books/RayTracingInOneWeekend.html">Ray Tracing in One weekend</a><br><br>
+        <div align="center">
+          <script type="module" src="../javascript/raytrace.js"></script>
+          <canvas id="rayTrace"></canvas>
+        </div>
+        <br><br>
+
+        Any rendering algorithm that relies on shooting rays from pixels and coloring them based on their interactions with the scene falls under the broad class of ray tracing methods. Among these, 
+        one particularly interesting variant is volume ray casting. This technique becomes extremely useful when the environment we wish to render isn’t made up of solid surfaces, but rather a 
+        volumetric field — think of fog, smoke, clouds, or translucent materials — where particles (or the medium) continuously interact with light. A light ray traveling through such a 
+        medium can interact with it in four fundamental ways:
+        <ul>
+          <li>Absorption: The ray loses intensity as light energy is absorbed by the medium.</li>
+          <li>Out-scattering: Light is deflected away from the original path.</li>
+          <li>In-scattering: Multiple rays are redirected into the ray’s direction, adding brightness.</li>
+          <li>Emission: The medium itself emits light from certain regions.</li>
+        </ul>
+        All these interactions collectively influence the intensity of the light as it travels, and this behavior is beautifully captured by a simple but powerful relation known as the Beer–Lambert Law:
+        <div> $$ \frac{dI(s)}{ds} = -\sigma I(s) $$ </div> 
+        <div class="blog-image"> 
+          <img src="../assets/blog-images/NGP/Light_Interaction.png" alt="Light Interaction"> 
+        </div>
+
+        This equation describes how the intensity \( I(s) \) of a light ray changes as it moves along a path \( s \) through a medium. The parameter \(\sigma\) — often called the optical density — 
+        encapsulates the properties of the medium: how much light is absorbed, scattered, or emitted at a given location.   Assuming \(\sigma \) is constant, the equation can be solved to give:
+
+        <div> $$ \frac{I(s)}{I(0)} = e^{-\sigma s} $$ </div>
+        The ratio above is called transmittance — it represents the fraction of light that successfully passes through the medium without being absorbed or scattered. The above equation is fine as long as
+        the medium is homogeneous i.e. the \(\sigma\) value stays constant. But if we were to deal with hetergenous media (which would be the most common scenario), we have to consider the change in the optical 
+        density. So the equation becomes 
+        <div>$$ T(s) = \frac{I(s)}{I(0)} = \exp(-\int_0^s \sigma(z)dz) $$</div>
+        In essence, the farther a light ray travels through a dense medium, the dimmer it becomes, following an exponential decay. Now, when rendering a volumetric medium, we follow the same ray-shooting idea, but 
+        instead of finding a single intersection point, we accumulate the light contributions from all points the ray encounters along its path. This becomes an integration of all the transmittance at every given 
+        point in space
+        <div>
+          $$ I_o = \int_{0}^{\infty}T(s)\sigma(s)I(s)ds $$
+        </div>
+        I have written the rendering equation in a very simplified manner. To read more on the topic of volume rendering check out this 
+        <a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/volume-rendering-for-developers/volume-rendering-summary-equations.html">blog</a>. Below I give the equation in its real form and the image 
+        of the man - <b>James Kajiya</b> who came up with it
+        <div>
+          $$ L_o(\mathbf{x}, \omega_0, \lambda, t) = L_e(\mathbf{x}, \omega_0, \lambda, t) + \int_{\Omega}f_r(\mathbf{x}, \omega_i, \omega_o, \lambda, t)L_i(\mathbf{x}, \omega_0, \lambda, t)(\omega_i \cdot \mathbf{n})d\omega_i $$
+        </div>
+        <div class="blog-image">
+          <img src="../assets/blog-images/NGP/JamesKajiya.jpg" alt="James Kajiya">
+        </div>
       </div>
     </section>
 
+    <section id="nerf">
+      <div class="blog-container">
+        <h2><b>Neural Radiance Fields</b></h2>
+        Let’s get into the meat and potatoes. Neural Radiance Fields (NeRFs) use neural networks to learn the 3D structure of a scene or object by observing multiple 2D images captured from different viewpoints. This tackles one of 
+        the fundamental challenges in photogrammetry — reconstructing accurate 3D geometry from 2D observations.
 
-    <h2>Comments</h2>
-    <script src="https://giscus.app/client.js"
-        data-repo="aayush-rath/aayush-rath.github.io"
-        data-repo-id="R_kgDOPGW6yA"
-        data-category="Announcements"
-        data-category-id="DIC_kwDOPGW6yM4CtOsv"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="preferred_color_scheme"
-        data-lang="en"
-        crossorigin="anonymous"
-        async>
-    </script>
+        The difficulty arises because, when a 3D scene is projected onto a 2D image, we inherently lose depth information. In simple terms, while an image tells us where things appear, it doesn’t directly tell us how far they are. 
+        This relationship is captured by the following formulation:
+        
+        <div> $$ \begin{bmatrix} u \\ v \\ 1 \end{bmatrix} = K_{3 \times 4} R_{4 \times 4} \begin{bmatrix} x \\ y \\ z \\ 1 \end{bmatrix} $$ </div>
+        
+        This equation describes how a point in the 3D world \((x,y,z)\) is projected onto a 2D image plane \((u,v)\). The transformation first moves the point into the camera’s coordinate frame through the extrinsic matrix \(R_{4\times4}\)
+        , and then applies the camera intrinsics \(K_{3\times4}\) to project it onto the image plane. As we can see in the transformation, we lose one of the coordinates and there is no direct way we can inverse this process.<br><br>
+        <div>
+        $$
+        K_{3 \times 4} = 
+          \begin{bmatrix}
+          f_x & 0 & c_x & 0 \\
+          0 & f_y & c_y & 0 \\
+          0 & 0 & 1 & 0 \\
+          0 & 0 & 0 & 0 \\
+          \end{bmatrix}
+        $$
+        </div>
+        where 
+        <ul>
+          <li>\(f_x, f_y\) = Focal lengths</li>
+          <li>\(c_x, c_y\) = Camera plane center coordinates</li>
+        </ul>
+        <div class="blog-image">
+          <img src="../assets/blog-images/NGP/Camera_Transformation.png" alt="Camera Transformation">
+        </div>
+        If we could somehow recover this lost depth information, we would gain a complete 3D understanding of the captured scene — enabling us to even recreate images from entirely new viewpoints. A NeRF model achieves this by using 
+        multiple images of the same scene taken from different angles. It then trains a neural network to represent the 3D structure and appearance of that scene in a continuous way. In essence, the network learns a function that maps 
+        any 3D point and viewing direction to the color and density of light at that location. But how exactly does this network do that? What kind of architecture allows it to learn such complex geometric and visual relationships? 
+        Here’s where all the puzzle pieces start to fit together. The rendering equation we discussed earlier will come in handy once again — let’s rewrite it using the notation from the original NeRF paper:
+        <div>
+          $$ C(\vec{r}(t)) = \int_{t_n}^{t_f}T(t)\sigma(\vec{r}(t))\mathbf{c}(\vec{r}(t), \vec{d})dt $$
+        </div>
+        where
+        <ul>
+          <li>\(C\) = net radiance or color value of the pixel</li>
+          <li>\(\vec{r}(t)\) = ray passing through a particular pixel center</li>
+          <li>\(t_f\) & \(t_n\) = far and near bounds of the scene respectively</li>
+          <li>\(\vec{d}\) = viewing direction of the camera (represented in the polar coordinates)</li>
+        </ul>
+
+        Cool — now that we have this equation, we can approximate \(\sigma\) and \(\mathbf{c}\) using neural networks.
+        According to the paper, NeRF achieves impressive results even with a relatively simple network architecture.
+        They implemented a small MLP with just eight hidden layers — quite minimal compared to many of today’s large-scale models.
+        <br><br> <div class="blog-image">
+          <img src="../assets/blog-images/NGP/Network.png" alt="Network Diagram">
+        </div>
+
+        Images are sampled from multiple camera viewpoints, allowing rays to intersect the same 3D location from different perspectives. This enables the network to learn both the volume density and the view-dependent color of 
+        the scene. The loss function used is a straightforward pixel-wise mean squared error (MSE) loss. <br><br>
+        <div align="center">
+          <script type="module" src="../javascript/raytracemulti.js"></script>
+          <canvas id="rayTraceMulti"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section id="implementation">
+      <div class="blog-container">
+        <h2><b>Implementation</b></h2>
+        I implemented the classical NeRF with positional encoding on a synthetic dataset of the NeRF data - a model of a chair. I trained for 100 epochs
+        on a RTX 4060 with 2048 rays every batch which took around 21 mins with an exponential scheduling on the learning rate and downsampled the image 4
+        times the actual resolution for faster training while compromising a little on the quality. I have added the training montage below hopefully you find it as 
+        mesmerizing as I did.<br><br>
+        <div class="blog-image">
+          <img src="../assets/blog-images/NGP/combined_training_synthetic.gif" alt="Synthetic Nerf Training">
+        </div>
+        Below is an inference of novel views of a camera rotating along the x - axis.<br><br>
+        <div class="blog-image">
+          <img src="../assets/blog-images/NGP/novel_views_orbit.gif" alt="Chair">
+        </div> 
+        The trained sigma model of NeRF acts a indication function of the volume occupied in a given scene that can be used to extract the geometry of the 
+        object by using some mesh building algorithm like the marching cubes<br><br>
+        <div align="center">
+          <canvas id="nerfplay"></canvas>
+        </div>
+        <div class="button-wrapper">
+          <button id="dropButton">Drop Ball</button>
+        </div>
+    
+    
+        <script type="module" src="../javascript/nerf.js"></script>
+      </div>
+    </section>
+
+    <section id="conclusion">
+      <div class="blog-container">
+        <h2><b>Conclusion</b></h2>
+        Neural Radiance Fields represent a beautiful convergence of geometry, physics, and deep learning — blending classical rendering equations with the 
+        representational power of neural networks. What started as a clever mathematical reformulation of volume rendering has now evolved into one of the 
+        most elegant ways to reconstruct and render 3D scenes with photorealistic detail. <br><br> 
+        
+        Unlike traditional graphics pipelines that rely on fixed primitives like triangles or voxels, NeRF learns to represent the scene continuously — as a 
+        smooth, differentiable function of space and viewing direction. This not only allows it to capture intricate lighting effects and fine geometry, 
+        but also to generalize to new viewpoints with stunning accuracy. <br><br> 
+        
+        Of course, the classical NeRF is just the beginning. Its successors — Instant NGPs, Mip-NeRF, and Gaussian Splatting — have pushed the limits of 
+        speed, quality, and scalability. Yet, the core idea remains the same: using the mathematics of light and density as the foundation, and neural 
+        networks as the expressive medium. <br><br> 
+        
+        The future of computer graphics might not just be about rendering faster or prettier images — but about learning to understand and synthesize reality itself. 
+      </div> 
+    </section>
+
+    <section id="comments">
+      <h2>Comments</h2>
+      <script src="https://giscus.app/client.js"
+          data-repo="aayush-rath/aayush-rath.github.io"
+          data-repo-id="R_kgDOPGW6yA"
+          data-category="Announcements"
+          data-category-id="DIC_kwDOPGW6yM4CtOsv"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="en"
+          crossorigin="anonymous"
+          async>
+      </script>
+    </section>
 
     <footer class="site-footer">
       <hr class="footer-line">

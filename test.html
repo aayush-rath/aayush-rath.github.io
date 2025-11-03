@@ -1,48 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Dark Mode Toggle</title>
-  <style>
-    body {
-      transition: background-color 0.3s, color 0.3s;
-      background-color: white;
-      color: black;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <title>Camera Ray Visualization</title>
+    <style>
+      body { margin: 0; overflow: hidden; }
+      canvas { display: block; }
+    </style>
+  </head>
+  <body>
+    <script type="module">
+      import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.164/build/three.module.js';
+      import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.164/examples/jsm/controls/OrbitControls.js';
+      import { CameraHelper } from 'https://cdn.jsdelivr.net/npm/three@0.164/examples/jsm/helpers/CameraHelper.js';
 
-    body.dark-mode {
-      background-color: #121212;
-      color: white;
-    }
+      // Scene setup
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x111111);
 
-    .dark-mode-toggle {
-      font-size: 24px;
-      cursor: pointer;
-      border: none;
-      background: none;
-      margin: 20px;
-    }
-  </style>
-</head>
-<body>
+      const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 50);
+      camera.position.set(4, 2, 6);
 
-  <button id="darkModeToggle" class="dark-mode-toggle">🌙</button>
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
 
-  <script>
-    const toggleButton = document.getElementById('darkModeToggle');
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
 
-    toggleButton.addEventListener('click', () => {
-      document.body.classList.toggle('dark-mode');
+      // Add grid and axes
+      const grid = new THREE.GridHelper(10, 10);
+      scene.add(grid);
 
-      // Toggle emoji based on current class
-      if (document.body.classList.contains('dark-mode')) {
-        toggleButton.textContent = '☀️';  // sun
-      } else {
-        toggleButton.textContent = '🌙';  // moon
+      const axes = new THREE.AxesHelper(2);
+      scene.add(axes);
+
+      // Add cube
+      const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+      const cubeMaterial = new THREE.MeshStandardMaterial({ color: 0x00aaff });
+      const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+      cube.position.set(0, 0.5, -3);
+      scene.add(cube);
+
+      // Lights
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+      const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+      dirLight.position.set(5, 10, 7);
+      scene.add(ambientLight, dirLight);
+
+      // Camera frustum helper
+      const virtualCam = new THREE.PerspectiveCamera(40, 1.5, 0.1, 5);
+      virtualCam.position.set(0, 1, 2);
+      virtualCam.lookAt(0, 0, 0);
+      const camHelper = new CameraHelper(virtualCam);
+      scene.add(camHelper);
+
+      // Ray setup
+      const rayMaterial = new THREE.LineBasicMaterial({ color: 0xff0000 });
+      const rayGeometry = new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(), // start
+        new THREE.Vector3()  // end
+      ]);
+      const rayLine = new THREE.Line(rayGeometry, rayMaterial);
+      scene.add(rayLine);
+
+      // Compute intersection
+      const raycaster = new THREE.Raycaster();
+      const pixelDir = new THREE.Vector3(0.2, 0.1, -1).normalize(); // example pixel ray
+      const rayOrigin = virtualCam.position.clone();
+      raycaster.set(rayOrigin, pixelDir);
+
+      const intersects = raycaster.intersectObject(cube);
+      const hitPoint = intersects.length > 0 ? intersects[0].point : rayOrigin.clone().add(pixelDir.clone().multiplyScalar(5));
+
+      // Animate ray
+      let t = 0;
+      function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+
+        t += 0.02;
+        const progress = Math.min(t, 1.0);
+        const currentEnd = new THREE.Vector3().lerpVectors(rayOrigin, hitPoint, progress);
+        rayGeometry.setFromPoints([rayOrigin, currentEnd]);
+
+        renderer.render(scene, camera);
       }
-    });
-  </script>
 
-</body>
+      animate();
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    </script>
+  </body>
 </html>
-🛠 Common Fixes if 
