@@ -116,6 +116,15 @@
           }
       }
 
+      .article-section{
+        font-family: 'Josefin Slab';
+        font-weight: 100;
+        font-size: 30px;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        margin-left: 40px;
+      }
+
       body {
         margin: 0;
         padding: 0;
@@ -258,7 +267,27 @@
     
     <div class="horizontal_line"></div>
 
+    <div class="article-section">Publications</div>
+    <div class="horizontal_line"></div>
+
+    <div class="article-section">Projects</div>
+    <div class="horizontal_line"></div>
+
     <div class="project-container">
+
+      <a href="https://github.com/aayush-rath/Nolon-simulation-stack" class="project-card" target="_blank">
+        <video autoplay loop muted playsinline>
+          <source src="../assets/videos/PaGERo.mp4" type="video/mp4">
+        </video>
+        <div class="project-info">
+          <h2>Parallelized Geometry Engine for Robotics (PaGERo)</h2>
+          <p>
+            PaGERo is a geometry engine built for collision checking and simulation robot kinematics. It has a visualizer built using OpenGL and the code
+            is written CUDA to allow collision and distance queries to be run as device function to leverage them for parallel implementation of motion planning
+            algorithms.
+          </p>
+        </div>
+      </a>
 
       <a href="https://github.com/aayush-rath/Nolon-simulation-stack" class="project-card" target="_blank">
         <video autoplay loop muted playsinline>

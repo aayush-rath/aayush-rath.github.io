@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BX8JFPKXJ4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-BX8JFPKXJ4');
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <meta name="author" content="Aayush Rath">
+    <meta name="description" content="A website to write my blogs and my projects">
+    <title>Aayush Rath</title>
+    <link rel="icon" href="../assets/images/screw-removebg-preview.png">
+    <link href='https://fonts.googleapis.com/css?family=Josefin Slab' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Jura' rel='stylesheet'>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/"
+        }
+      }
+    </script>
+    <style>
+      * {
+          box-sizing: border-box;
+      }
+
+      html{
+          font-size: 22px;
+      }
+
+
+      h1 {
+          text-align: center;
+          font-family: 'Montserrat';
+          margin-bottom: 70px;
+          padding-top: 30px;
+          font-weight: 100;
+      }
+
+      h2 {
+        font-weight: 500;
+        padding-left: 5%;
+        margin-top: 30px;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+      .horizontal_line {
+          width: 100%;
+          border-top: 1px solid black;
+          animation: growLine 1.2s ease-out forwards;
+      }
+
+      body.dark-mode .horizontal_line {
+        border-top: 1px solid white;
+      }
+
+      .site-footer {
+          text-align: center;
+          margin-top: 30px;
+          padding: 20px;
+          font-family: 'Josefin Slab', serif;
+          color: #333;
+          background-color: #fffaf4;
+      }
+
+      .footer-line {
+          border: none;
+          border-top: 1px solid #aaa;
+          margin: 40px auto 20px auto;
+          width: 80%;
+      }
+
+      body.dark-mode .site-footer{
+        background-color: #222222;
+        color: white;
+      }
+
+      .home-button {
+        position: absolute;
+        top: 15px;
+        right: 30px;
+        background-color: #fffaf4;
+        color: #222;
+        padding: 6px 12px;
+        border-radius: 6px;
+        transition: background-color 0.3s, transform 0.2s;
+        z-index: 10;
+        margin-right: 50px;
+        margin-top: 10px;
+      }
+
+      .home-button:hover {
+        box-shadow: 0 12px 16px rgba(0, 0, 0, 0.24), 0 17px 50px rgba(0, 0, 0, 0.19);;
+      }
+
+      @keyframes growLine {
+        from {
+        width: 0;
+        }
+        to {
+        width: 100%;
+        }
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background-color: #fffaf4;
+      }
+
+      body.dark-mode {
+        background-color: #222222;
+        color: #f5f5f5;
+      }
+
+      .dark-mode-toggle {
+        position: fixed;
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        top: 15px;
+        left: 30px;
+        padding: 6px;
+        border: none;
+        border-radius: 6px;
+        background-color: #f6ddd0;
+        color: #000;
+        cursor: pointer;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        transition: background-color 0.3s;
+
+        z-index: 9999;
+        pointer-events: auto;
+      }
+
+      body.dark-mode .dark-mode-toggle {
+        background-color: #333;
+        color: #fff;
+      }
+
+      .blog-container {
+        max-width: 70%;
+        margin: 50px auto 40px auto;
+        padding: 10px;
+        background-color: #fffaf4;
+        color: #222222;
+        font-family: 'Georgia', 'Times New Roman', serif;
+        line-height: 1.7;
+        font-size: 18px;
+        border-radius: 12px;
+        transition: background-color 0.4s, color 0.4s;
+      }
+
+      .blog-container h2 {
+        padding-left: 0;
+      }
+
+      body.dark-mode .blog-container {
+          background-color: #222222;
+          color: #eaeaea;
+      }
+
+      .blog-image {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .blog-image img {
+        max-width: 700px;
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+      }
+
+      nav.sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 220px;
+        background-color: #f6ddd0;
+        padding-top: 80px;
+        font-family: 'Montserrat', sans-serif;
+        transition: transform 0.3s ease;
+        overflow-y: auto;
+        z-index: 1000;
+        transform: translateX(-220px);
+      }
+
+      nav.sidebar a {
+        display: block;
+        padding: 12px 20px;
+        color: #222;
+        text-decoration: none;
+        transition: background 0.2s;
+      }
+
+      nav.sidebar a:hover {
+        background-color: #ddd;
+      }
+
+      body.dark-mode nav.sidebar {
+        background-color: #333;
+      }
+
+      body.dark-mode nav.sidebar a {
+        color: #f5f5f5;
+      }
+
+      nav.sidebar.open {
+        transform: translateX(0);
+      }
+
+
+      .sidebar-toggle {
+        position: fixed;
+        top: 15px;
+        left: 120px;
+        background-color: #f6ddd0;
+        color: #222;
+        border: none;
+        border-radius: 6px;
+        font-size: 24px;
+        padding: 8px 12px;
+        cursor: pointer;
+        z-index: 1100;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        transition: background-color 0.3s;
+      }
+
+      .sidebar-toggle:hover {
+        background-color: #e0c9bc;
+      }
+
+      body.dark-mode .sidebar-toggle {
+        background-color: #333;
+        color: #fff;
+      }
+
+      body, .page-header, .site-footer, .button, .horizontal_line,.blog-container, h1, p, a {
+        transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+      }
+
+      pre {
+        background-color: #f5f5f5;   /* light background */
+        color: #333;                 /* dark text */
+        padding: 16px;
+        border-radius: 8px;
+        overflow-x: auto;
+        font-family: "Fira Code", "Courier New", monospace;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .keyword { color: #0000cc; font-weight: bold; }
+      .type { color: #008080; }
+      .string { color: #a31515; }
+      .number { color: #6d0986; font-weight: bold;}
+      .comment { color: #008000; font-style: italic; }
+
+      body.dark-mode pre {
+        background-color: #1e1e1e;
+        color: #dcdcdc;
+      }
+      body.dark-mode .keyword { color: #569cd6; }
+      body.dark-mode .type { color: #4ec9b0; }
+      body.dark-mode .string { color: #d69d85; }
+      body.dark-mode .number { color: #b5cea8; }
+      body.dark-mode .comment { color: #6a9955; font-style: italic; }
+    </style>
+  </head>
+
+  <body>
+    <nav class="sidebar" id="sidebar">
+        <a href="#intro">Introduction</a>
+    </nav>
+    <button id="darkModeToggle" class="dark-mode-toggle">🌙</button>
+    <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+    <a href="../index.html" class="home-button">
+        <img src="../assets/images/home_button.png" alt="Home" width="40px">
+    </a> 
+    <h1>The Geometer's Soup</h1>
+    <div class="horizontal_line"></div>
+    <section id="intro">
+        <div class="blog-container">
+            <h2><b>Introduction</b></h2>
+            In this blog I would like to present the geometers-soup for your soul cause its better than chicken soup. I want this blog to be treated as a non-lexigographical dictionary
+            of some of the popular algorithms used in computational geometry.
+        </div>
+    </section>
+
+    <section id="intro">
+        <div class="blog-container">
+            <h2><b>Convex Hull Algorithms</b></h2>
+            Finding the convex hull of a given set of points is a common problem that prevails in many applications is very useful. I can mention an important application of convex hulls in robotics.
+            We often have to find the bounding region of certain shapes given the point cloud of that object. We can create clusters of points by using some clustering algorithm like DBScan and then approximate
+            the shape of the object using the convex hull. I present some of the well know convex hull algorithms for 2D point sets some which can be easily extended to higher dimensions.
+
+            <pre><code>
+                <span class="comment">// To represent a single point in the 2D space</span>
+                <span class="keyword">typedef</span> std::pair&lt;<span class="type">float, float</span>&gt; <span class="type">Point</span>;
+                <span class="keyword">#define</span> x first
+                <span class="keyword">#define</span> y second
+
+                <span class="comment">// To represent a set of Points</span>
+                <span class="keyword">typedef</span> std::vector&lt;<span class="type">Point</span>&gt; <span class="type">PointSet</span>;
+            </code></pre>
+
+            For these algorithms we will need a function that tells us how three given in a particular order are oriented in the space. To do this we simply compare the slopes the other two points make with the line.
+            I have taken the denominators on the either sides of the inequality so that we don't have to deal with floating point errors. I will also need one more helper function that tells me if a point already exists 
+            in a point set.
+
+            <pre><code>
+                <span class="comment">// Compares the slopes of the points. Negative = CCW, Positive = CW</span>
+                <span class="type">float</span> orientation(
+                    <span class="keyword">const</span> <span class="type">Point</span>& p1,
+                    <span class="keyword">const</span> <span class="type">Point</span>& p1,
+                    <span class="keyword">const</span> <span class="type">Point</span>& p2,
+                ) {
+                    <span class="keyword">return</span> (p2.y - p1.y) * (p3.x - p1.x) - (p2.x - p1.x) * (p3.y - p1.y); 
+                }
+
+                <span class="comment">// Check if the given already lies in the Point Set</span>
+                <span class="keyword">inline</span> <span class="type">bool</span> checkPointIn(
+                    <span class="keyword">const</span> <span class="type">Point</span>& point,
+                    <span class="keyword">const</span> <span class="type">PointSet</span>& points
+                ) {
+                    if (points.empty()) <span class="keyword">return</span> <span class="number">true</span>;
+                    <span class="keyword">return</span> (p2.y - p1.y) * (p3.x - p1.x) - (p2.x - p1.x) * (p3.y - p1.y); 
+                }
+            </code></pre>
+
+            <h3>Jarvis Algorithm</h3>
+            Jarvis Algorithm is the simplest one of all. It is very similar to selection sort i.e. you compare each element with the successive element and then sort it. We first find a point to start with. As per the 
+            original algorithm we go with the left point. 
+            <pre><code>
+                <span class="comment">// Get the left-most point from the Point Set (PointSet points) </span>
+                <span class="keyword">for</span> (<span class="keyword">const auto</span>& point : points) {
+                  if ()
+                }
+            </code></pre>
+            
+            Starting from the left most point we take the next point which makes the least slope out of all the points in the 
+
+        </div>
+    </section>
+    <h2>Comments</h2>
+    <script src="https://giscus.app/client.js"
+        data-repo="aayush-rath/aayush-rath.github.io"
+        data-repo-id="R_kgDOPGW6yA"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOPGW6yM4CtOsv"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+    </script>
+
+    <footer class="site-footer">
+      <hr class="footer-line">
+      <p>&copy; 2025 Aayush Rath. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const toggleBtn = document.getElementById('darkModeToggle');
+        
+        const isDarkMode = () => document.body.classList.contains('dark-mode');
+        
+        function updateGiscusTheme(isDark) {
+            const giscusFrame = document.querySelector('iframe.giscus-frame');
+            if (!giscusFrame) return;
+            const message = {
+            setConfig: {
+                theme: isDark ? 'dark' : 'light'
+            }
+            };
+            giscusFrame.contentWindow.postMessage(message, 'https://giscus.app');
+        }
+        
+        function applyDarkModePreference() {
+            const enabled = localStorage.getItem('darkMode') === 'enabled';
+            document.body.classList.toggle('dark-mode', enabled);
+        
+            toggleBtn.textContent = enabled ? '🌞' : '🌙';
+        
+            if (window.updateThreeSceneForDarkMode)
+            window.updateThreeSceneForDarkMode(enabled);
+        
+            updateGiscusTheme(enabled);
+        }
+        
+        toggleBtn.addEventListener('click', () => {
+            const enabled = !isDarkMode();
+            document.body.classList.toggle('dark-mode', enabled);
+            localStorage.setItem('darkMode', enabled ? 'enabled' : 'disabled');
+            toggleBtn.textContent = enabled ? '🌞' : '🌙';
+        
+            if (window.updateThreeSceneForDarkMode)
+            window.updateThreeSceneForDarkMode(enabled);
+        
+            updateGiscusTheme(enabled);
+        });
+        
+        document.addEventListener('sceneReady', applyDarkModePreference);
+        applyDarkModePreference();
+
+        const sidebar = document.getElementById("sidebar");
+        const sidebarToggle = document.getElementById("sidebarToggle");
+
+        sidebarToggle.addEventListener("click", () => {
+          sidebar.classList.toggle("open");
+        });
+
+        document.querySelectorAll('.sidebar a').forEach(anchor => {
+          anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+              behavior: 'smooth'
+            });
+            sidebar.classList.remove("open");
+          });
+        });
+    </script>
+  </body>
+</html>
