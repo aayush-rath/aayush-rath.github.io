@@ -3,6 +3,7 @@
 <html lang="en">
 
   <head>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.9">
     <meta name="author" content="Aayush Rath">
@@ -163,13 +164,39 @@
         color: #fff;
       }
 
+      .paper-container {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        margin: 20px auto;
+        max-width: 1200px;
+        padding: 0 20px;
+      }
+
       .project-container {
         display: flex;
         flex-direction: column;
         gap: 30px;
         margin: 20px auto;
-        max-width: 900px;
+        max-width: 1200px;
         padding: 0 20px;
+      }
+
+      .paper-card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        background-color: rgb(241, 223, 201);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        transform: scale(1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+        text-decoration: none;
+        color: inherit;
+        min-height: 100px;
       }
 
       .project-card {
@@ -203,7 +230,7 @@
       .project-info {
         position: relative;
         z-index: 1;
-        background: rgba(0, 0, 0, 0.55);
+        background: rgba(0, 0, 0, 0.5);
         color: #fff;
         padding: 20px;
         width: 100%;
@@ -244,7 +271,25 @@
         font-size: 1.4rem;
       }
 
+      .paper-info {
+        flex: 2;
+        padding: 20px;
+        font-family: 'Arial', serif;
+        font-size: medium;
+      }
+
+      .paper-info h2 {
+        margin-top: 0;
+        font-family: 'Times New Roman', serif;
+        font-size: 1.2rem;
+      }
+
       body.dark-mode .project-card {
+        background-color: #333;
+        color: #f5f5f5;
+      }
+
+      body.dark-mode .paper-card {
         background-color: #333;
         color: #f5f5f5;
       }
@@ -270,6 +315,17 @@
     <div class="article-section">Publications</div>
     <div class="horizontal_line"></div>
 
+    <div class="paper-container">
+      <a href="https://arxiv.org/abs/2608.01172" class="paper-card" target="_blank">
+        <div class="paper-info">
+          <h2>Complete Motion Planning using Workspace-Fibered Decomposition for \( n \)R-Planar Manipulator</h2>
+          <p>
+            <i>Submitted to ISRR 2026</i>
+          </p>
+        </div>
+      </a>
+    </div>
+
     <div class="article-section">Projects</div>
     <div class="horizontal_line"></div>
 
@@ -282,8 +338,8 @@
         <div class="project-info">
           <h2>Parallelized Geometry Engine for Robotics (PaGERo)</h2>
           <p>
-            PaGERo is a geometry engine built for collision checking and simulation robot kinematics. It has a visualizer built using OpenGL and the code
-            is written CUDA to allow collision and distance queries to be run as device function to leverage them for parallel implementation of motion planning
+            PaGERo is a geometry engine built for collision checking and simulate robot kinematics. It has a visualizer built using OpenGL and the code
+            is written CUDA to allow collision and distance queries to be run as device function enabling them for parallel implementation of motion planning
             algorithms.
           </p>
         </div>
